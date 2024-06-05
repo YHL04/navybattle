@@ -1,5 +1,4 @@
 # navybattle
-A Navy Battle game app to rival Clash Royale.
+Navy Battle is a Unity implementation of the game "Black Navy War," where users can earn money and deploy ships to fight against an enemy's fleet. 
 
-
-Let me know if you want to make an organization for this project.
+This repository will only contain the necessary components for a Unity game, such as code, sprites, etc (TBD).
