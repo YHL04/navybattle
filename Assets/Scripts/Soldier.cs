@@ -1,20 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.ConstrainedExecution;
 using UnityEngine;
 
 // Soldier is an implementation of a Character. A "Player" will contain this GameObject via composition and 
 // call its logic functions within its control loops (Update).
 public class Soldier : Character
 {
-    public override void Attack()
-    {
+    // SET DEFAULT VALUES HERE
+    private const float defaultSpeed = 4f;
+    private const float defaultHealth = 100f;
+    private const float defaultDefense = 5f;
 
-    }
-
-    public override void Move()
+    // CONSTRUCTOR PASSES IN BUFF VALUES
+    private void Awake()
     {
-        float dx = Input.GetAxis("Horizontal");
-        float dy = Input.GetAxis("Vertical");
-        GetComponent<Rigidbody2D>().velocity = new Vector2(dx*MovementSpeed, dy*MovementSpeed);
+        this._movementSpeed = defaultSpeed;
+        this._health = defaultHealth;
+        this._maxHealth = defaultHealth;
+        this._defense = defaultDefense;
     }
 }
