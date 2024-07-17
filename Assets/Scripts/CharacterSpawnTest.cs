@@ -9,12 +9,16 @@ public class CharacterSpawnTest : MonoBehaviour
     private Player p;
     [SerializeField]
     private GameObject prefab;
+    private CharacterSpawner spawner;
     // Update is called once per frame
+    private void Awake()
+    {
+        spawner = ScriptableObject.CreateInstance<CharacterSpawner>();
+    }
     void Update()
     {
         if(Input.GetMouseButtonDown(0))
         {
-            CharacterSpawner spawner = ScriptableObject.CreateInstance<CharacterSpawner>();
             spawner.spawnCharacter(p, prefab, new Vector3(0f, 0f, 0f));
         }
     }

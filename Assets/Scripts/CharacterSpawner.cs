@@ -10,6 +10,8 @@ public class CharacterSpawner : ScriptableObject
     public void spawnCharacter(Player player, GameObject prefab, Vector3 location)
     {
         GameObject g =  Instantiate(prefab, location, Quaternion.identity);
+        Character c = g.GetComponent<Character>();
+        c.Layer = Layers.PLAYER;
         player.setCharacter(g.GetComponent<Character>());
     }
 }

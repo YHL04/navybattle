@@ -10,11 +10,13 @@ public interface ICharacter : IComponent
     // Represents a scaler for the character's movement speed
     float MovementSpeed { get; }
     // Represents the current health of a character
-    float Health { get; set; }
+    float Health { get; }
     // Represents the total health
     float MaxHealth { get; }
     // Represents the defense of a character (lowers the damage they take)
     float Defense { get; }
+    // Represents the layer the character is in (Player, Enemy) to determine damage groups
+    int Layer { get; set; }
     // Chracters need to implement their own move logic
     void Move(float dx, float dy);
     // Characters need to implement their own attack logic
@@ -43,6 +45,7 @@ public abstract class Character : MonoBehaviour, ICharacter
     protected float _maxHealth;
     protected float _health;
     protected float _defense;
+    protected int _layer;
 
     // Implementations of interface functions and variables
     public Component component { get { return this; } }
@@ -53,7 +56,6 @@ public abstract class Character : MonoBehaviour, ICharacter
     public float Health
     {
         get { return _health; }
-        set { _health = value; }
     }
     public float MaxHealth
     {
@@ -62,6 +64,11 @@ public abstract class Character : MonoBehaviour, ICharacter
     public float Defense
     {
         get { return _defense; }
+    }
+    public int Layer
+    {
+        get { return _layer; }
+        set { _layer = value; }
     }
     // Every character has the same move logic
     public void Move(float dx, float dy)
@@ -77,7 +84,7 @@ public abstract class Character : MonoBehaviour, ICharacter
     public void TakeDamage(float damage)
     {
         // This function can change... about every 2 defense will half the damage taken. Note we clamp with 0
-        this.Health = Mathf.Clamp(this.Health - damage / (0.5f * this.Defense + 1), 0, float.MaxValue);
+        this._health = Mathf.Clamp(this.Health - damage / (0.5f * this.Defense + 1), 0, float.MaxValue);
     }
     // Check if the character is alive
     public bool isAlive()
@@ -94,7 +101,7 @@ public abstract class Character : MonoBehaviour, ICharacter
     // Heal the character
     public void Heal(float hp)
     {
-        this.Health = Mathf.Clamp(this.Health + hp, 0, this.MaxHealth);
+        this._health = Mathf.Clamp(this.Health + hp, 0, this.MaxHealth);
     }
     // Terminate the current character GameObject
     public void Terminate()
