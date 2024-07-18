@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -10,15 +11,15 @@ public interface ICharacter : IComponent
     // Represents a scaler for the character's movement speed
     float MovementSpeed { get; }
     // Represents the current health of a character
-    float Health { get; set; }
+    float Health { get; }
     // Represents the total health
     float MaxHealth { get; }
     // Represents the defense of a character (lowers the damage they take)
     float Defense { get; }
+    // Represents the layer the character is in (Player, Enemy) to determine damage groups
+    int Layer { get; set; }
     // Chracters need to implement their own move logic
     void Move(float dx, float dy);
-    // Characters need to implement their own attack logic
-    void Attack();
     // Characters need to take damage
     void TakeDamage(float damage);
     // Chracters need to be able to identify if they have died
@@ -30,6 +31,7 @@ public interface ICharacter : IComponent
     // Terminate the character gameobject
     void Terminate();
 
+    // NOTE: Not every character needs an inventory or be able to use items!
 }
 
 /**
@@ -43,6 +45,9 @@ public abstract class Character : MonoBehaviour, ICharacter
     protected float _maxHealth;
     protected float _health;
     protected float _defense;
+    protected int _layer;
+    protected int _hotkey;
+    protected IItem[] _inventory;
 
     // Implementations of interface functions and variables
     public Component component { get { return this; } }
@@ -53,7 +58,6 @@ public abstract class Character : MonoBehaviour, ICharacter
     public float Health
     {
         get { return _health; }
-        set { _health = value; }
     }
     public float MaxHealth
     {
@@ -63,21 +67,84 @@ public abstract class Character : MonoBehaviour, ICharacter
     {
         get { return _defense; }
     }
+    public int Layer
+    {
+        get { return _layer; }
+        set { _layer = value; }
+    }
+    public int InventorySize
+    {
+        get { return _inventory.Length; }
+    }
+    public int Hotkey
+    {
+        get { return _layer; }
+        set
+        {
+            if(value >= 0 && value < _inventory.Length)
+            {
+                if(_inventory[_hotkey] != null)
+                {
+                    _inventory[_hotkey].enabled = false;
+                }
+                _hotkey = value;
+                if (_inventory[_hotkey] != null)
+                {
+                    _inventory[_hotkey].enabled = true;
+                }
+            }
+        }
+    }
+    // Character needs to "Hold" item
+    public void HoldItem()
+    {
+        if (_inventory[_hotkey] != null)
+        {
+            // TEMPORARY DIMENSIONAL SHIFTS
+            _inventory[_hotkey].enabled = true;
+            _inventory[_hotkey].transform.position = this.transform.position + this.transform.rotation*Vector2.right;
+            _inventory[_hotkey].transform.rotation = this.transform.rotation;
+        }
+    }
     // Every character has the same move logic
     public void Move(float dx, float dy)
     {
         GetComponent<Rigidbody2D>().velocity = new Vector2(dx * MovementSpeed, dy * MovementSpeed);
     }
     // Every character will have the same attack logic, just with a different weapon
-    public void Attack()
+    public void UseItem(int num)
     {
-        throw new NotImplementedException("Method not implemented.");
+        if (_inventory[num] != null)
+        {
+            Debug.Log(_inventory[num]);
+            _inventory[num].Use();
+        }
+    }
+
+    public void PickUpItem(IItem item)
+    {
+        for(int i = 0; i < _inventory.Length; i++)
+        {
+            if (_inventory[i] == null)
+            {
+                _inventory[i] = item;
+                return;
+            }
+        }
+    }
+    public void DropItem()
+    {
+        if (_inventory[_hotkey] != null)
+        {
+            _inventory[_hotkey].Destroy();
+            _inventory[_hotkey] = null;
+        }
     }
     // Every character will take damage by the same algorithm
     public void TakeDamage(float damage)
     {
         // This function can change... about every 2 defense will half the damage taken. Note we clamp with 0
-        this.Health = Mathf.Clamp(this.Health - damage / (0.5f * this.Defense + 1), 0, float.MaxValue);
+        this._health = Mathf.Clamp(this.Health - damage / (0.5f * this.Defense + 1), 0, float.MaxValue);
     }
     // Check if the character is alive
     public bool isAlive()
@@ -94,11 +161,18 @@ public abstract class Character : MonoBehaviour, ICharacter
     // Heal the character
     public void Heal(float hp)
     {
-        this.Health = Mathf.Clamp(this.Health + hp, 0, this.MaxHealth);
+        this._health = Mathf.Clamp(this.Health + hp, 0, this.MaxHealth);
     }
     // Terminate the current character GameObject
     public void Terminate()
     {
-        Destroy(this);
+        for(int i = 0; i < _inventory.Length; i++)
+        {
+            if (_inventory[i] != null)
+            {
+                _inventory[i].Destroy();
+            }
+        }
+        Destroy(gameObject);
     }
 }
