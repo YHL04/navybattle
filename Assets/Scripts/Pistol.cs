@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class Pistol : Firearm
@@ -16,12 +17,13 @@ public class Pistol : Firearm
         this._capacity = 12;
         this._ammo = this._capacity;
         this.bulletSpawner = ScriptableObject.CreateInstance<BulletSpawner>();
+        this.bulletSpawner.Initialize(this);
     }
     public override void Use()
     {
         if (this._ammo > 0)
         {
-            bulletSpawner.spawnBullet(bulletPrefab, this, this._layer);
+            bulletSpawner.spawn(transform.position);
             this._ammo--;
         }
     }

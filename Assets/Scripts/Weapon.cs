@@ -8,6 +8,11 @@ public abstract class Item : MonoBehaviour, IItem
 {
     public Component component { get { return this; } }
     public abstract void Use();
+
+    public void Destroy()
+    {
+        Destroy(gameObject);
+    }
 }
 public abstract class Weapon : Item, IWeapon
 {

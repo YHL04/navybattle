@@ -6,6 +6,7 @@ using static UnityEditor.Experimental.GraphView.GraphView;
 public interface IItem : IComponent
 {
     void Use();
+    void Destroy();
 }
 
 public interface IWeapon : IItem

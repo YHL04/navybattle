@@ -95,6 +95,17 @@ public abstract class Character : MonoBehaviour, ICharacter
             }
         }
     }
+    // Character needs to "Hold" item
+    public void HoldItem()
+    {
+        if (_inventory[_hotkey] != null)
+        {
+            // TEMPORARY DIMENSIONAL SHIFTS
+            _inventory[_hotkey].enabled = true;
+            _inventory[_hotkey].transform.position = this.transform.position + this.transform.rotation*Vector2.right;
+            _inventory[_hotkey].transform.rotation = this.transform.rotation;
+        }
+    }
     // Every character has the same move logic
     public void Move(float dx, float dy)
     {
@@ -107,6 +118,26 @@ public abstract class Character : MonoBehaviour, ICharacter
         {
             Debug.Log(_inventory[num]);
             _inventory[num].Use();
+        }
+    }
+
+    public void PickUpItem(IItem item)
+    {
+        for(int i = 0; i < _inventory.Length; i++)
+        {
+            if (_inventory[i] == null)
+            {
+                _inventory[i] = item;
+                return;
+            }
+        }
+    }
+    public void DropItem()
+    {
+        if (_inventory[_hotkey] != null)
+        {
+            _inventory[_hotkey].Destroy();
+            _inventory[_hotkey] = null;
         }
     }
     // Every character will take damage by the same algorithm
@@ -135,6 +166,13 @@ public abstract class Character : MonoBehaviour, ICharacter
     // Terminate the current character GameObject
     public void Terminate()
     {
-        Destroy(this);
+        for(int i = 0; i < _inventory.Length; i++)
+        {
+            if (_inventory[i] != null)
+            {
+                _inventory[i].Destroy();
+            }
+        }
+        Destroy(gameObject);
     }
 }

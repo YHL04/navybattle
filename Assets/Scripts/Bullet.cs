@@ -31,7 +31,8 @@ public class Bullet : MonoBehaviour
         // If we are out of range, destroy
         if(distance > maxDistance)
         {
-            Destroy(this);
+            Debug.Log("DESTROYED!");
+            Destroy(gameObject);
         }
     }
     // Detect collision
@@ -48,7 +49,7 @@ public class Bullet : MonoBehaviour
             if(c.Layer != layer)
             {
                 c.TakeDamage(damage);
-                Destroy(this);
+                Destroy(gameObject);
             }
         }
     }

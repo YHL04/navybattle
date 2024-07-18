@@ -18,6 +18,8 @@ public class Player : MonoBehaviour
     {
         if (character)
         {
+            // CARRY CURRENT ITEM
+            character.HoldItem();
             // PLAYER MOTION
             float dx = Input.GetAxis("Horizontal");
             float dy = Input.GetAxis("Vertical");
