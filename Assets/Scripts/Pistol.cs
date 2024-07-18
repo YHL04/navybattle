@@ -19,6 +19,10 @@ public class Pistol : Firearm
     }
     public override void Use()
     {
-        bulletSpawner.spawnBullet(bulletPrefab, this, this._layer);
+        if (this._ammo > 0)
+        {
+            bulletSpawner.spawnBullet(bulletPrefab, this, this._layer);
+            this._ammo--;
+        }
     }
 }

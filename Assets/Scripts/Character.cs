@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -19,8 +20,6 @@ public interface ICharacter : IComponent
     int Layer { get; set; }
     // Chracters need to implement their own move logic
     void Move(float dx, float dy);
-    // Characters need to implement their own attack logic
-    void Attack();
     // Characters need to take damage
     void TakeDamage(float damage);
     // Chracters need to be able to identify if they have died
@@ -32,6 +31,7 @@ public interface ICharacter : IComponent
     // Terminate the character gameobject
     void Terminate();
 
+    // NOTE: Not every character needs an inventory or be able to use items!
 }
 
 /**
@@ -46,6 +46,8 @@ public abstract class Character : MonoBehaviour, ICharacter
     protected float _health;
     protected float _defense;
     protected int _layer;
+    protected int _hotkey;
+    protected IItem[] _inventory;
 
     // Implementations of interface functions and variables
     public Component component { get { return this; } }
@@ -70,15 +72,42 @@ public abstract class Character : MonoBehaviour, ICharacter
         get { return _layer; }
         set { _layer = value; }
     }
+    public int InventorySize
+    {
+        get { return _inventory.Length; }
+    }
+    public int Hotkey
+    {
+        get { return _layer; }
+        set
+        {
+            if(value >= 0 && value < _inventory.Length)
+            {
+                if(_inventory[_hotkey] != null)
+                {
+                    _inventory[_hotkey].enabled = false;
+                }
+                _hotkey = value;
+                if (_inventory[_hotkey] != null)
+                {
+                    _inventory[_hotkey].enabled = true;
+                }
+            }
+        }
+    }
     // Every character has the same move logic
     public void Move(float dx, float dy)
     {
         GetComponent<Rigidbody2D>().velocity = new Vector2(dx * MovementSpeed, dy * MovementSpeed);
     }
     // Every character will have the same attack logic, just with a different weapon
-    public void Attack()
+    public void UseItem(int num)
     {
-        throw new NotImplementedException("Method not implemented.");
+        if (_inventory[num] != null)
+        {
+            Debug.Log(_inventory[num]);
+            _inventory[num].Use();
+        }
     }
     // Every character will take damage by the same algorithm
     public void TakeDamage(float damage)

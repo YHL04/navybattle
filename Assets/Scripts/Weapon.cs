@@ -3,14 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
-public abstract class Weapon : MonoBehaviour, IWeapon
+
+public abstract class Item : MonoBehaviour, IItem
+{
+    public Component component { get { return this; } }
+    public abstract void Use();
+}
+public abstract class Weapon : Item, IWeapon
 {
     protected float _damage;
     protected float _delay;
     protected float _range;
     protected int _layer;
-
-    public Component component { get { return this; } }
     public float Damage
     {
         get { return _damage; }
@@ -27,7 +31,6 @@ public abstract class Weapon : MonoBehaviour, IWeapon
         get { return _layer; }
         set { _layer = value; }
     }
-    public abstract void Use();
 }
 
 public abstract class Firearm : Weapon, IFirearm
