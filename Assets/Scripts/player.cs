@@ -43,7 +43,7 @@ public class Player : MonoBehaviour
             // PLAYER USES ITEM
             if(Input.GetKeyDown(KeyCode.E))
             {
-                character.UseItem(hotkey);
+                character.UseItem();
             }
         }
     }

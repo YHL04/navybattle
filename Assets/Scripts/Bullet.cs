@@ -31,7 +31,6 @@ public class Bullet : MonoBehaviour
         // If we are out of range, destroy
         if(distance > maxDistance)
         {
-            Debug.Log("DESTROYED!");
             Destroy(gameObject);
         }
     }
