@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Pistol : Firearm
 {
-    private BulletSpawner bulletSpawner;
     [SerializeField]
     private GameObject bulletPrefab;
     private void Awake()

@@ -43,7 +43,7 @@ public abstract class Firearm : Weapon, IFirearm
     protected float _bulletSpeed;
     protected int _capacity;
     protected int _ammo;
-
+    protected BulletSpawner bulletSpawner;
     public int Ammo
     {
         get { return _ammo; }

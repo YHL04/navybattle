@@ -17,7 +17,7 @@ public class Bullet : MonoBehaviour
         this.damage = damage;
     }
     // Set initial location
-    private void Awake()
+    void Awake()
     {
         lastPos = transform.position;
         distance = 0;
@@ -42,7 +42,7 @@ public class Bullet : MonoBehaviour
         // If null we hit a wall or a non-character, therefore destroy the bullet
         if(!c)
         {
-            Destroy(this);
+            Destroy(gameObject);
         } else
         {
             // If valid character and the groups differ, count as a hit

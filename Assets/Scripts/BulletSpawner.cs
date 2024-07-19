@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Dynamic;
 using UnityEngine;
 
-public class BulletSpawner : ScriptableObject
+public class BulletSpawner : Spawner
 {
     private IFirearm f;
     private GameObject bulletPrefab;
@@ -13,7 +13,7 @@ public class BulletSpawner : ScriptableObject
         this.f = f;
         bulletPrefab = Resources.Load<GameObject>("Prefabs/Bullet");
     }
-    public GameObject spawn(Vector3 location)
+    public override GameObject spawn(Vector3 location)
     {
         Vector3 velocity = f.BulletSpeed*(f.transform.rotation * Vector3.right);
 
