@@ -16,7 +16,6 @@ public class SoldierSpawner : Spawner
     }
     public override GameObject spawn(Vector3 location)
     {
-        Debug.Log(soldierPrefab);
         GameObject characterObject = Instantiate(soldierPrefab, location, Quaternion.identity);
         Character c = characterObject.GetComponent<Character>();
         // Obtain a pistol

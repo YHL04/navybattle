@@ -34,11 +34,20 @@ public interface ICharacter : IComponent
     // NOTE: Not every character needs an inventory or be able to use items!
 }
 
+public interface IInventory
+{
+    int InventorySize { get; }
+    int Hotkey { get; set; }
+    void UseItem();
+    void PickUpItem(IItem item);
+    void DropItem();
+}
+
 /**
  *  Character is an abstract class that represents a specific character a Player can choose.
  *  Character is responsible for unique motion implementations, display, health, etc.
  */
-public abstract class Character : MonoBehaviour, ICharacter
+public abstract class Character : MonoBehaviour, ICharacter, IInventory
 {
     // SerializeField allows us to edit private variables in Unity (e.g. it is listed for us to edit despite being private)
     protected float _movementSpeed;
@@ -112,12 +121,11 @@ public abstract class Character : MonoBehaviour, ICharacter
         GetComponent<Rigidbody2D>().velocity = new Vector2(dx * MovementSpeed, dy * MovementSpeed);
     }
     // Every character will have the same attack logic, just with a different weapon
-    public void UseItem(int num)
+    public void UseItem()
     {
-        if (_inventory[num] != null)
+        if (_inventory[_hotkey] != null)
         {
-            Debug.Log(_inventory[num]);
-            _inventory[num].Use();
+            _inventory[_hotkey].Use();
         }
     }
 

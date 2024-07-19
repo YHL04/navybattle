@@ -13,7 +13,7 @@ public class Soldier : Character
     private const float defaultDefense = 5f;
 
     // CONSTRUCTOR PASSES IN BUFF VALUES
-    private void Awake()
+    void Awake()
     {
         this._movementSpeed = defaultSpeed;
         this._health = defaultHealth;
