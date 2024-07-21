@@ -159,7 +159,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.00001049, y: 85.188}
+  m_AnchoredPosition: {x: 4.7787, y: 85.188}
   m_SizeDelta: {x: 176.671, y: 43.7717}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &109042466
@@ -205,7 +205,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 109042467}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 150723643}
+        m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+        m_MethodName: OnPlayButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &109042467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -292,7 +304,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.00048828, y: -60}
+  m_AnchoredPosition: {x: 4.7787, y: -59}
   m_SizeDelta: {x: 176.671, y: 43.7717}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &124923416
@@ -338,7 +350,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 124923417}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 150723643}
+        m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+        m_MethodName: OnQuitButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &124923417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -389,6 +413,7 @@ GameObject:
   - component: {fileID: 150723641}
   - component: {fileID: 150723640}
   - component: {fileID: 150723639}
+  - component: {fileID: 150723643}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -482,6 +507,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &150723643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 150723638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f161e97187632854197347ceb02081c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &283858357
 GameObject:
   m_ObjectHideFlags: 0
@@ -856,7 +893,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 0}
+  m_BackGroundColor: {r: 0.0528301, g: 0.05003907, b: 0.05003907, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1262,7 +1299,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2020752475}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 150723643}
+        m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+        m_MethodName: OnSettings
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2020752475
 MonoBehaviour:
   m_ObjectHideFlags: 0
