@@ -20,7 +20,7 @@ public class BulletSpawner : Spawner
         GameObject g = Instantiate(bulletPrefab, location, f.transform.rotation);
         Bullet b = g.GetComponent<Bullet>();
         // Set the range in the bullet before we set its velocity (motion)
-        b.Initialize(f.Range,f.Layer,f.Damage);
+        b.Initialize(f.Range,f.gameObject.layer,f.Damage);
         // Set the layer this gun was fired in (player layer, enemy layer)
         g.GetComponent<Rigidbody2D>().velocity = velocity;
         return g;

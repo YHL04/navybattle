@@ -6,7 +6,7 @@ using UnityEngine;
 public class SoldierSpawnerButton : MonoBehaviour
 {
     [SerializeField]
-    private Player p;
+    private ControllableCharacter p;
     private SoldierSpawner soldierSpawner;
     // Update is called once per frame
     void Awake()

@@ -14,7 +14,6 @@ public interface IWeapon : IItem
     float Damage { get; }
     float Delay { get; }
     float Range { get; }
-    public int Layer { get; set; }
 }
 
 public interface IFirearm : IWeapon
