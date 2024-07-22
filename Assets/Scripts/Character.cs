@@ -16,8 +16,6 @@ public interface ICharacter : IComponent
     float MaxHealth { get; }
     // Represents the defense of a character (lowers the damage they take)
     float Defense { get; }
-    // Represents the layer the character is in (Player, Enemy) to determine damage groups
-    int Layer { get; set; }
     // Chracters need to implement their own move logic
     void Move(float dx, float dy);
     // Characters need to take damage
@@ -54,7 +52,6 @@ public abstract class Character : MonoBehaviour, ICharacter, IInventory
     protected float _maxHealth;
     protected float _health;
     protected float _defense;
-    protected int _layer;
     protected int _hotkey;
     protected IItem[] _inventory;
 
@@ -76,18 +73,13 @@ public abstract class Character : MonoBehaviour, ICharacter, IInventory
     {
         get { return _defense; }
     }
-    public int Layer
-    {
-        get { return _layer; }
-        set { _layer = value; }
-    }
     public int InventorySize
     {
         get { return _inventory.Length; }
     }
     public int Hotkey
     {
-        get { return _layer; }
+        get { return _hotkey; }
         set
         {
             if(value >= 0 && value < _inventory.Length)
@@ -101,6 +93,18 @@ public abstract class Character : MonoBehaviour, ICharacter, IInventory
                 {
                     _inventory[_hotkey].enabled = true;
                 }
+            }
+        }
+    }
+    // Character needs to have its layer set (player enemy)
+    public void SetLayer(int layer)
+    {
+        this.gameObject.layer = layer;
+        for(int i = 0; i < _inventory.Length; i++)
+        {
+            if (_inventory[i] != null)
+            {
+                _inventory[i].gameObject.layer = layer;
             }
         }
     }
@@ -157,14 +161,14 @@ public abstract class Character : MonoBehaviour, ICharacter, IInventory
     // Check if the character is alive
     public bool isAlive()
     {
-        return _health <= 0;
+        return _health > 0;
     }
     // Upgrade the character's stats
     public void Upgrade(float hp, float defense, float movementSpeed)
     {
-        this._maxHealth = hp;
-        this._defense = defense;
-        this._movementSpeed = movementSpeed;
+        this._maxHealth += hp;
+        this._defense += defense;
+        this._movementSpeed += movementSpeed;
     }
     // Heal the character
     public void Heal(float hp)

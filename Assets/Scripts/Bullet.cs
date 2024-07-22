@@ -35,7 +35,7 @@ public class Bullet : MonoBehaviour
         }
     }
     // Detect collision
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         Character c = collision.gameObject.GetComponent<Character>();
         // If null we hit a wall or a non-character, therefore destroy the bullet
@@ -45,7 +45,7 @@ public class Bullet : MonoBehaviour
         } else
         {
             // If valid character and the groups differ, count as a hit
-            if(c.Layer != layer)
+            if(c.gameObject.layer != layer)
             {
                 c.TakeDamage(damage);
                 Destroy(gameObject);

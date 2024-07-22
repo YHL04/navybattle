@@ -2,22 +2,63 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public abstract class ControllableCharacter : MonoBehaviour
 {
-    private Character character;
-    [SerializeField]
-    private Camera camera;
-    private int hotkey;
-    // Awake is called on the instantiation of the class
+    protected Character character;
+    protected int hotkey;
+    protected bool active;
+    // Check if the current player is active (flag for removal)
+    public bool Active { get { return active;  } }
+    public bool ActiveCharacter { get { return character != null; } }
     void Awake()
     {
         this.hotkey = 0;
+        this.active = true;
     }
+    // How updating occurs depends on the implementation. Controller class
+    public abstract void Update();
+    public void setCharacter(Character c)
+    {
+        this.character = c;
+        this.character.SetLayer(this.gameObject.layer);
+    }
+    // Terminating the entity, maybe a player quits or an enemy dies
+    public void Terminate()
+    {
+        if(this.character != null)
+        {
+            this.character.Terminate();
+        }
+        Destroy(this.gameObject);
+    }
+    // Get the current location of the player's character (if playing)
+    public Transform GetLocation()
+    {
+        if(character != null)
+        {
+            return character.transform;
+        }
+        return null;
+    }
+}
+public class Player : ControllableCharacter
+{
+    [SerializeField]
+    private Camera cam;
+
     // Update is called once per frame
-    void Update()
+    public override void Update()
     {
         if (character)
         {
+            // Check if player is dead
+            if(!character.isAlive())
+            {
+                character.Terminate();
+                character = null;
+                // DO NOT set player to inactive on death of a character!
+                return;
+            }
             // CARRY CURRENT ITEM
             character.HoldItem();
             // PLAYER MOTION
@@ -35,7 +76,7 @@ public class Player : MonoBehaviour
             }
 
             // PLAYER ANGLE
-            Vector3 mousePos = camera.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
             Vector3 rotation = mousePos - character.transform.position;
             float rotZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
             character.transform.rotation = Quaternion.Euler(0, 0, rotZ);
@@ -47,14 +88,9 @@ public class Player : MonoBehaviour
             }
         }
     }
-
-    // Set our character
-    public void setCharacter(Character c)
+    // Disconnect the current player (flag for destruction)
+    public void Disconnect()
     {
-        if(character)
-        {
-            character.Terminate();
-        }
-        character = c;
+        this.active = false;
     }
 }

@@ -9,10 +9,11 @@ public class Pistol : Firearm
     private GameObject bulletPrefab;
     private void Awake()
     {
-        this._damage = 5f;
+        // TEMP HIGH DAMAGE: DEATH IN 5 SHOTS
+        this._damage = 60f;
         this._delay = 0.5f;
         this._range = 100f;
-        this._bulletSpeed = 100f;
+        this._bulletSpeed = 50f;
         this._capacity = 12;
         this._ammo = this._capacity;
         this.bulletSpawner = ScriptableObject.CreateInstance<BulletSpawner>();
