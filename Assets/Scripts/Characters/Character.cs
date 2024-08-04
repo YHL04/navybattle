@@ -86,12 +86,12 @@ public abstract class Character : MonoBehaviour, ICharacter, IInventory
             {
                 if(_inventory[_hotkey] != null)
                 {
-                    _inventory[_hotkey].enabled = false;
+                    _inventory[_hotkey].gameObject.SetActive(false);
                 }
                 _hotkey = value;
                 if (_inventory[_hotkey] != null)
                 {
-                    _inventory[_hotkey].enabled = true;
+                    _inventory[_hotkey].gameObject.SetActive(true);
                 }
             }
         }
