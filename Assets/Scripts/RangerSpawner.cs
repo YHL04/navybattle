@@ -6,13 +6,13 @@ using static UnityEditor.FilePathAttribute;
 public class RangerSpawner : Spawner
 {
     private GameObject rangerPrefab;
-    private CrossbowSpawner crossbowSpawner;
+    private FirearmSpawner crossbowSpawner;
 
     public void Initialize()
     {
         rangerPrefab = Resources.Load<GameObject>("Prefabs/Ranger");
-        crossbowSpawner = CreateInstance<CrossbowSpawner>();
-        crossbowSpawner.Initialize();
+        crossbowSpawner = CreateInstance<FirearmSpawner>();
+        crossbowSpawner.Initialize("Crossbow");
     }
     public override GameObject spawn(Vector3 location)
     {
