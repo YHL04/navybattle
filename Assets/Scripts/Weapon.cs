@@ -41,6 +41,7 @@ public abstract class Weapon : Item, IWeapon
 public abstract class Firearm : Weapon, IFirearm
 {
     protected float _bulletSpeed;
+    protected float _bulletSpread;
     protected int _capacity;
     protected int _ammo;
     protected BulletSpawner bulletSpawner;
@@ -56,6 +57,10 @@ public abstract class Firearm : Weapon, IFirearm
     public float BulletSpeed
     {
         get { return _bulletSpeed; }
+    }
+    public float BulletSpread
+    {
+        get { return _bulletSpread; }
     }
     public int Reload(int ammo)
     {

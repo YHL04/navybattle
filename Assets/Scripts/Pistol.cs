@@ -14,6 +14,7 @@ public class Pistol : Firearm
         this._delay = 0.5f;
         this._range = 100f;
         this._bulletSpeed = 50f;
+        this._bulletSpread = 5f;
         this._capacity = 12;
         this._ammo = this._capacity;
         this.bulletSpawner = ScriptableObject.CreateInstance<BulletSpawner>();

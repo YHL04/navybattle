@@ -19,6 +19,7 @@ public interface IWeapon : IItem
 public interface IFirearm : IWeapon
 {
     float BulletSpeed { get; }
+    float BulletSpread { get; }
     int Ammo { get; }
     int Capacity { get; }
     int Reload(int ammo);
