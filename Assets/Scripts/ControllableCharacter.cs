@@ -19,6 +19,10 @@ public abstract class ControllableCharacter : MonoBehaviour
     public abstract void Update();
     public void setCharacter(Character c)
     {
+        if (this.character != null)
+        {
+            this.character.Terminate();
+        }
         this.character = c;
         this.character.SetLayer(this.gameObject.layer);
     }
