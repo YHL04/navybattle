@@ -15,13 +15,18 @@ public class BulletSpawner : Spawner
     }
     public override GameObject spawn(Vector3 location)
     {
+        // Get velocity vector
         Vector3 velocity = f.BulletSpeed*(f.transform.rotation * Vector3.right);
-
+        // Rotate velocity vector via bullet spread angle
+        float rotZ = Random.Range(-f.BulletSpread/2, f.BulletSpread/2);
+        Quaternion rot = Quaternion.Euler(0,0,rotZ);
+        velocity = rot * velocity;
+        // Instantiate bullet
         GameObject g = Instantiate(bulletPrefab, location, f.transform.rotation);
         Bullet b = g.GetComponent<Bullet>();
         // Set the range in the bullet before we set its velocity (motion)
         b.Initialize(f.Range,f.gameObject.layer,f.Damage);
-        // Set the layer this gun was fired in (player layer, enemy layer)
+        // Make the bullet move
         g.GetComponent<Rigidbody2D>().velocity = velocity;
         return g;
     }

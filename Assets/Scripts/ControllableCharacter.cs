@@ -10,7 +10,7 @@ public abstract class ControllableCharacter : MonoBehaviour
     // Check if the current player is active (flag for removal)
     public bool Active { get { return active;  } }
     public bool ActiveCharacter { get { return character != null; } }
-    void Awake()
+    public virtual void Awake()
     {
         this.hotkey = 0;
         this.active = true;
