@@ -8,7 +8,7 @@ using UnityEngine;
 public class Ranger : Character
 {
     // SET DEFAULT VALUES HERE
-    private const float defaultSpeed = 3.5f;
+    private const float defaultSpeed = 6f;
     private const float defaultHealth = 80f;
     private const float defaultDefense = 3f;
 

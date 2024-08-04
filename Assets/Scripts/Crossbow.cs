@@ -14,7 +14,7 @@ public class Crossbow : Firearm
         this._delay = 3.0f;
         this._range = 150f;
         this._bulletSpeed = 40f;
-        this._capacity = 100;
+        this._capacity = 8;
         this._ammo = this._capacity;
         this.bulletSpawner = ScriptableObject.CreateInstance<BulletSpawner>();
         this.bulletSpawner.Initialize(this);

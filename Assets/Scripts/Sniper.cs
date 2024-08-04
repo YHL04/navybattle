@@ -8,7 +8,7 @@ using UnityEngine;
 public class Sniper : Character
 {
     // SET DEFAULT VALUES HERE
-    private const float defaultSpeed = 3.5f;
+    private const float defaultSpeed = 2.5f;
     private const float defaultHealth = 80f;
     private const float defaultDefense = 3f;
 
