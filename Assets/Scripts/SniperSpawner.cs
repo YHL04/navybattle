@@ -6,13 +6,13 @@ using static UnityEditor.FilePathAttribute;
 public class SniperSpawner : Spawner
 {
     private GameObject sniperPrefab;
-    private SniperRifleSpawner sniperRifleSpawner;
+    private FirearmSpawner sniperRifleSpawner;
 
     public void Initialize()
     {
         sniperPrefab = Resources.Load<GameObject>("Prefabs/Sniper");
-        sniperRifleSpawner = CreateInstance<SniperRifleSpawner>();
-        sniperRifleSpawner.Initialize();
+        sniperRifleSpawner = CreateInstance<FirearmSpawner>();
+        sniperRifleSpawner.Initialize("SniperRifle");
     }
     public override GameObject spawn(Vector3 location)
     {
