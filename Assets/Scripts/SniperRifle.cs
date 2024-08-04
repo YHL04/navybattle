@@ -9,7 +9,7 @@ public class SniperRifle : Firearm
     private GameObject bulletPrefab;
     private void Awake()
     {
-        // TEMP HIGH DAMAGE: DEATH IN 5 SHOTS
+        // two(?) shot
         this._damage = 200f;
         this._delay = 1.0f;
         this._range = 200f;
