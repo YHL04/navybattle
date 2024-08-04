@@ -45,6 +45,7 @@ public abstract class Firearm : Weapon, IFirearm
     protected float _bulletSpread;
     protected int _capacity;
     protected int _ammo;
+    protected bool _ready;
     protected BulletSpawner bulletSpawner;
     public int Ammo
     {
@@ -62,6 +63,12 @@ public abstract class Firearm : Weapon, IFirearm
     public float BulletSpread
     {
         get { return _bulletSpread; }
+    }
+    protected IEnumerator Cooldown()
+    {
+        _ready = false;
+        yield return new WaitForSeconds(_delay);
+        _ready = true;
     }
     public int Reload(int ammo)
     {
