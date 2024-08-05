@@ -41,7 +41,7 @@ public interface IInventory
     int InventorySize { get; }
     int Hotkey { get; set; }
     void UseItem();
-    void PickUpItem(IItem item);
+    void PickUpItem(IHoldableItem item);
     void DropItem();
 }
 
@@ -58,7 +58,7 @@ public abstract class Character : MonoBehaviour, ICharacter, IInventory
     protected float _defense;
     protected int _hotkey;
     protected int _ammo;
-    protected IItem[] _inventory;
+    protected IHoldableItem[] _inventory;
 
     // Implementations of interface functions and variables
     public Component component { get { return this; } }
@@ -137,6 +137,7 @@ public abstract class Character : MonoBehaviour, ICharacter, IInventory
     // Every character will have the same attack logic, just with a different weapon
     public void UseItem()
     {
+        Debug.Log(this.Ammo);
         if (_inventory[_hotkey] != null)
         {
             _inventory[_hotkey].Use();
@@ -156,7 +157,7 @@ public abstract class Character : MonoBehaviour, ICharacter, IInventory
             }
         }
     }
-    public void PickUpItem(IItem item)
+    public void PickUpItem(IHoldableItem item)
     {
         for(int i = 0; i < _inventory.Length; i++)
         {

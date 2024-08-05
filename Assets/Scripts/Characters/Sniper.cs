@@ -20,6 +20,6 @@ public class Sniper : Character
         this._maxHealth = defaultHealth;
         this._defense = defaultDefense;
         this._ammo = 32;
-        this._inventory = new IItem[5];
+        this._inventory = new IHoldableItem[5];
     }
 }

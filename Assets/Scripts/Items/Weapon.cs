@@ -4,21 +4,23 @@ using UnityEngine;
 using static Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
-
 public abstract class Item : MonoBehaviour, IItem
 {
     public Component component { get { return this; } }
 
     public abstract ItemType Type { get; }
 
-    public abstract void Use();
 
     public void Destroy()
     {
         Destroy(gameObject);
     }
 }
-public abstract class Weapon : Item, IWeapon
+public abstract class IHoldabletem : Item, IHoldableItem
+{
+    public abstract void Use();
+}
+public abstract class Weapon : IHoldabletem, IWeapon
 {
     protected float _damage;
     protected float _delay;
