@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
 
@@ -8,7 +9,7 @@ public abstract class Item : MonoBehaviour, IItem
 {
     public Component component { get { return this; } }
 
-    public abstract void Use();
+    public abstract void Use(ICharacter c, int flag= 0);
 
     public void Destroy()
     {
@@ -70,7 +71,25 @@ public abstract class Firearm : Weapon, IFirearm
         yield return new WaitForSeconds(_delay);
         _ready = true;
     }
-    public int Reload(int ammo)
+    public override void Use(ICharacter c, int flag = 0)
+    {
+        if(flag == 0)
+        {
+            // Shoot the gun
+            this.Shoot();
+        } else if (flag == 1)
+        {
+            // Reload the gun
+            int max_ammo = this._capacity - this._ammo;
+            int actual_ammo = Mathf.Min(c.Ammo, max_ammo);
+            this.Reload(actual_ammo);
+            c.UseAmmo(actual_ammo);
+        }
+    }
+    // All guns shoot differently
+    protected abstract void Shoot();
+    // All guns reload the same way
+    protected int Reload(int ammo)
     {
         if(this.Ammo + ammo <= this.Capacity)
         {

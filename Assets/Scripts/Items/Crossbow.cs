@@ -21,7 +21,7 @@ public class Crossbow : Firearm
         this.bulletSpawner = ScriptableObject.CreateInstance<BulletSpawner>();
         this.bulletSpawner.Initialize(this);
     }
-    public override void Use()
+    protected override void Shoot()
     {
         if (this._ammo > 0 && _ready)
         {

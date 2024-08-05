@@ -26,6 +26,7 @@ public class Player : ControllableCharacter
         playerControls.Player.Look.performed += Look;
         playerControls.Player.Use.performed += UseItem;
         playerControls.Player.Inventory.performed += Inventory;
+        playerControls.Player.Reload.performed += Reload;
     }
 
     private void OnDisable()
@@ -78,6 +79,14 @@ public class Player : ControllableCharacter
             {
                 character.Hotkey = key - 1;
             }
+        }
+    }
+
+    private void Reload(InputAction.CallbackContext context)
+    {
+        if (character)
+        {
+            character.UseItem(1);
         }
     }
     // Update is called once per frame

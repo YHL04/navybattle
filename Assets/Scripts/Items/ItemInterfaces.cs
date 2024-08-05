@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
 public interface IItem : IComponent
 {
-    void Use();
+    void Use(ICharacter c, int flag=0);
     void Destroy();
 }
 
@@ -22,5 +23,4 @@ public interface IFirearm : IWeapon
     float BulletSpread { get; }
     int Ammo { get; }
     int Capacity { get; }
-    int Reload(int ammo);
 }
