@@ -4,9 +4,18 @@ using System.ComponentModel;
 using UnityEngine;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
+// This enum will allow us to cast up to a differennt interface
+public enum ItemType
+{
+    ITEM,
+    WEAPON,
+    FIREARM,
+    CONSUMABLE
+}
 public interface IItem : IComponent
 {
-    void Use(ICharacter c, int flag=0);
+    ItemType Type { get; }
+    void Use();
     void Destroy();
 }
 
@@ -23,4 +32,5 @@ public interface IFirearm : IWeapon
     float BulletSpread { get; }
     int Ammo { get; }
     int Capacity { get; }
+    public int Reload(int ammo);
 }

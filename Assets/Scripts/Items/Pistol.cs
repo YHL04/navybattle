@@ -21,7 +21,7 @@ public class Pistol : Firearm
         this.bulletSpawner = ScriptableObject.CreateInstance<BulletSpawner>();
         this.bulletSpawner.Initialize(this);
     }
-    protected override void Shoot()
+    public override void Use()
     {
         if (this._ammo > 0 && _ready)
         {

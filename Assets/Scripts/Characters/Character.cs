@@ -30,8 +30,6 @@ public interface ICharacter : IComponent
     void Heal(float hp);
     // Reload the charactere's ammo
     void StockAmmo(int ammo);
-    // Reload the charactere's ammo
-    void UseAmmo(int ammo);
     // Terminate the character gameobject
     void Terminate();
 
@@ -42,7 +40,7 @@ public interface IInventory
 {
     int InventorySize { get; }
     int Hotkey { get; set; }
-    void UseItem(int flag = 0);
+    void UseItem();
     void PickUpItem(IItem item);
     void DropItem();
 }
@@ -137,14 +135,27 @@ public abstract class Character : MonoBehaviour, ICharacter, IInventory
         GetComponent<Rigidbody2D>().velocity = new Vector2(dx * MovementSpeed, dy * MovementSpeed);
     }
     // Every character will have the same attack logic, just with a different weapon
-    public void UseItem(int flag = 0)
+    public void UseItem()
     {
         if (_inventory[_hotkey] != null)
         {
-            _inventory[_hotkey].Use(this, flag);
+            _inventory[_hotkey].Use();
         }
     }
 
+    // Reload the current item if it supports reloading
+    public void Reload()
+    {
+        if (_inventory[_hotkey] != null)
+        {
+            ItemType type = _inventory[_hotkey].Type;
+            if(type == ItemType.FIREARM)
+            {
+                IFirearm firearm = (IFirearm) _inventory[_hotkey];
+                this._ammo = firearm.Reload(_ammo);
+            }
+        }
+    }
     public void PickUpItem(IItem item)
     {
         for(int i = 0; i < _inventory.Length; i++)
@@ -192,15 +203,6 @@ public abstract class Character : MonoBehaviour, ICharacter, IInventory
     public void StockAmmo(int ammo)
     {
         this._ammo += ammo;
-    }
-    // Use ammo
-    public void UseAmmo(int ammo)
-    {
-        this._ammo -= ammo;
-        if(this._ammo < 0)
-        {
-            this._ammo = 0;
-        }
     }
     // Terminate the current character GameObject
     public void Terminate()

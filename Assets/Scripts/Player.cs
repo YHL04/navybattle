@@ -86,7 +86,7 @@ public class Player : ControllableCharacter
     {
         if (character)
         {
-            character.UseItem(1);
+            character.Reload();
         }
     }
     // Update is called once per frame
