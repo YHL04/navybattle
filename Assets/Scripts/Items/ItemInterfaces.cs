@@ -16,16 +16,22 @@ public interface IItem : IComponent
     ItemType Type { get; }
     void Destroy();
 }
-public interface IDropItem : IItem
+public interface IFloorItem : IItem
 {
     public void OnTriggerEnter2D(Collider2D collision);
 }
-public interface IHoldableItem : IItem
+
+public interface IDropItem : IItem
+{
+    void OnDrop();
+}
+
+public interface IInventoryItem : IFloorItem, IDropItem
 {
     void Use();
 }
 
-public interface IWeapon : IItem
+public interface IWeapon : IInventoryItem
 {
     float Damage { get; }
     float Delay { get; }

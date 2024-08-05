@@ -41,7 +41,7 @@ public interface IInventory
     int InventorySize { get; }
     int Hotkey { get; set; }
     void UseItem();
-    void PickUpItem(IHoldableItem item);
+    void PickUpItem(IInventoryItem item);
     void DropItem();
 }
 
@@ -58,7 +58,7 @@ public abstract class Character : MonoBehaviour, ICharacter, IInventory
     protected float _defense;
     protected int _hotkey;
     protected int _ammo;
-    protected IHoldableItem[] _inventory;
+    protected IInventoryItem[] _inventory;
 
     // Implementations of interface functions and variables
     public Component component { get { return this; } }
@@ -156,7 +156,7 @@ public abstract class Character : MonoBehaviour, ICharacter, IInventory
             }
         }
     }
-    public void PickUpItem(IHoldableItem item)
+    public void PickUpItem(IInventoryItem item)
     {
         for(int i = 0; i < _inventory.Length; i++)
         {
@@ -172,7 +172,7 @@ public abstract class Character : MonoBehaviour, ICharacter, IInventory
     {
         if (_inventory[_hotkey] != null)
         {
-            _inventory[_hotkey].Destroy();
+            _inventory[_hotkey].OnDrop();
             _inventory[_hotkey] = null;
         }
     }

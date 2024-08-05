@@ -10,17 +10,41 @@ public abstract class Item : MonoBehaviour, IItem
 
     public abstract ItemType Type { get; }
 
-
     public void Destroy()
     {
         Destroy(gameObject);
     }
 }
-public abstract class IHoldabletem : Item, IHoldableItem
+public abstract class InventoryItem : Item, IInventoryItem
 {
     public abstract void Use();
+
+    private IEnumerator OnDropActivate()
+    {
+        yield return new WaitForSeconds(2f);
+        this.gameObject.GetComponent<Collider2D>().enabled = true;
+    }
+    public void OnDrop()
+    {
+        // Cooldown on grabbing again, needs to be a separate function call
+        StartCoroutine(OnDropActivate());
+    }
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        Character c = collision.gameObject.GetComponent<Character>();
+        // Must be picked up by a character
+        if (c)
+        {
+            // Must be a player
+            if (c.gameObject.layer == Layers.PLAYER)
+            {
+                this.gameObject.GetComponent<Collider2D>().enabled = false;
+                c.PickUpItem(this);
+            }
+        }
+    }
 }
-public abstract class Weapon : IHoldabletem, IWeapon
+public abstract class Weapon : InventoryItem, IWeapon
 {
     protected float _damage;
     protected float _delay;
@@ -74,6 +98,7 @@ public abstract class Firearm : Weapon, IFirearm
     {
         get { return _reloadTime; }
     }
+    // REDEFINE
     protected IEnumerator Cooldown(float time)
     {
         _ready = false;
