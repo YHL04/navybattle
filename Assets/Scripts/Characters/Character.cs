@@ -16,6 +16,8 @@ public interface ICharacter : IComponent
     float MaxHealth { get; }
     // Represents the defense of a character (lowers the damage they take)
     float Defense { get; }
+    // Characters need to hold ammo
+    int Ammo { get; }
     // Chracters need to implement their own move logic
     void Move(float dx, float dy);
     // Characters need to take damage
@@ -26,6 +28,8 @@ public interface ICharacter : IComponent
     void Upgrade(float hp, float defense, float movementSpeed);
     // Heal the character some amount
     void Heal(float hp);
+    // Reload the charactere's ammo
+    void StockAmmo(int ammo);
     // Terminate the character gameobject
     void Terminate();
 
@@ -37,7 +41,7 @@ public interface IInventory
     int InventorySize { get; }
     int Hotkey { get; set; }
     void UseItem();
-    void PickUpItem(IItem item);
+    void PickUpItem(IHoldableItem item);
     void DropItem();
 }
 
@@ -53,7 +57,8 @@ public abstract class Character : MonoBehaviour, ICharacter, IInventory
     protected float _health;
     protected float _defense;
     protected int _hotkey;
-    protected IItem[] _inventory;
+    protected int _ammo;
+    protected IHoldableItem[] _inventory;
 
     // Implementations of interface functions and variables
     public Component component { get { return this; } }
@@ -96,6 +101,11 @@ public abstract class Character : MonoBehaviour, ICharacter, IInventory
             }
         }
     }
+    public int Ammo
+    {
+        get { return _ammo; }
+    }
+
     // Character needs to have its layer set (player enemy)
     public void SetLayer(int layer)
     {
@@ -133,12 +143,26 @@ public abstract class Character : MonoBehaviour, ICharacter, IInventory
         }
     }
 
-    public void PickUpItem(IItem item)
+    // Reload the current item if it supports reloading
+    public void Reload()
+    {
+        if (_inventory[_hotkey] != null)
+        {
+            ItemType type = _inventory[_hotkey].Type;
+            if(type == ItemType.FIREARM)
+            {
+                IFirearm firearm = (IFirearm) _inventory[_hotkey];
+                this._ammo = firearm.Reload(_ammo);
+            }
+        }
+    }
+    public void PickUpItem(IHoldableItem item)
     {
         for(int i = 0; i < _inventory.Length; i++)
         {
             if (_inventory[i] == null)
             {
+                // IF ITS AMMO ADD IT TO OUR 
                 _inventory[i] = item;
                 return;
             }
@@ -174,6 +198,11 @@ public abstract class Character : MonoBehaviour, ICharacter, IInventory
     public void Heal(float hp)
     {
         this._health = Mathf.Clamp(this.Health + hp, 0, this.MaxHealth);
+    }
+    // Stock ammo
+    public void StockAmmo(int ammo)
+    {
+        this._ammo += ammo;
     }
     // Terminate the current character GameObject
     public void Terminate()

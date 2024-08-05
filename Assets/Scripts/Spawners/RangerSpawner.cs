@@ -21,7 +21,7 @@ public class RangerSpawner : Spawner
         // Obtain a pistol
         GameObject crossbowObject = crossbowSpawner.spawn(c.transform.position);
         // Set up the player
-        c.PickUpItem(crossbowObject.GetComponent<IItem>());
+        c.PickUpItem(crossbowObject.GetComponent<IHoldableItem>());
         return characterObject;
     }
 }

@@ -1,21 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics;
 using static UnityEditor.Experimental.GraphView.GraphView;
-
 
 public abstract class Item : MonoBehaviour, IItem
 {
     public Component component { get { return this; } }
 
-    public abstract void Use();
+    public abstract ItemType Type { get; }
+
 
     public void Destroy()
     {
         Destroy(gameObject);
     }
 }
-public abstract class Weapon : Item, IWeapon
+public abstract class IHoldabletem : Item, IHoldableItem
+{
+    public abstract void Use();
+}
+public abstract class Weapon : IHoldabletem, IWeapon
 {
     protected float _damage;
     protected float _delay;
@@ -70,6 +75,10 @@ public abstract class Firearm : Weapon, IFirearm
         yield return new WaitForSeconds(_delay);
         _ready = true;
     }
+    public override ItemType Type {
+        get { return ItemType.FIREARM; }
+    }
+    // All guns reload the same way
     public int Reload(int ammo)
     {
         if(this.Ammo + ammo <= this.Capacity)

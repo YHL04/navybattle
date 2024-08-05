@@ -15,7 +15,7 @@ public class SniperRifle : Firearm
         this._range = 200f;
         this._bulletSpeed = 100f;
         this._bulletSpread = 1f;
-        this._capacity = 6;
+        this._capacity = 4;
         this._ammo = this._capacity;
         this._ready = true;
         this.bulletSpawner = ScriptableObject.CreateInstance<BulletSpawner>();

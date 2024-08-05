@@ -21,7 +21,7 @@ public class SoldierSpawner : Spawner
         // Obtain a pistol
         GameObject pistolObject = pistolSpawner.spawn(c.transform.position);
         // Set up the player
-        c.PickUpItem(pistolObject.GetComponent<IItem>());
+        c.PickUpItem(pistolObject.GetComponent<IHoldableItem>());
         return characterObject;
     }
 }

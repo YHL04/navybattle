@@ -21,7 +21,7 @@ public class SniperSpawner : Spawner
         // Obtain a pistol
         GameObject sniperRifleObject = sniperRifleSpawner.spawn(c.transform.position);
         // Set up the player
-        c.PickUpItem(sniperRifleObject.GetComponent<IItem>());
+        c.PickUpItem(sniperRifleObject.GetComponent<IHoldableItem>());
         return characterObject;
     }
 }

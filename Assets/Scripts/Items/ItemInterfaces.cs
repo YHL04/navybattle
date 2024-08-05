@@ -1,12 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 using static UnityEditor.Experimental.GraphView.GraphView;
+using static UnityEditor.Progress;
 
+// This enum will allow us to cast up to a different interface of importance
+public enum ItemType
+{
+    FIREARM,
+    DROP
+}
 public interface IItem : IComponent
 {
-    void Use();
+    ItemType Type { get; }
     void Destroy();
+}
+public interface IDropItem : IItem
+{
+    public void OnTriggerEnter2D(Collider2D collision);
+}
+public interface IHoldableItem : IItem
+{
+    void Use();
 }
 
 public interface IWeapon : IItem
@@ -22,5 +38,5 @@ public interface IFirearm : IWeapon
     float BulletSpread { get; }
     int Ammo { get; }
     int Capacity { get; }
-    int Reload(int ammo);
+    public int Reload(int ammo);
 }
