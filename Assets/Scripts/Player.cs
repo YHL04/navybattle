@@ -27,6 +27,7 @@ public class Player : ControllableCharacter
         playerControls.Player.Use.performed += UseItem;
         playerControls.Player.Inventory.performed += Inventory;
         playerControls.Player.Reload.performed += Reload;
+        playerControls.Player.Drop.performed += Drop;
     }
 
     private void OnDisable()
@@ -87,6 +88,14 @@ public class Player : ControllableCharacter
         if (character)
         {
             character.Reload();
+        }
+    }
+
+    private void Drop(InputAction.CallbackContext context)
+    {
+        if (character)
+        {
+            character.DropItem();
         }
     }
     // Update is called once per frame

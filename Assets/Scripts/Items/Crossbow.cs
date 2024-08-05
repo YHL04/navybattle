@@ -10,11 +10,12 @@ public class Crossbow : Firearm
     private void Awake()
     {
         // TEMP HIGH DAMAGE: DEATH IN 5 SHOTS
-        this._damage = 100f;
-        this._delay = 1.0f;
+        this._damage = 60f;
+        this._delay = 0.5f;
+        this._reloadTime = 3f;
         this._range = 150f;
         this._bulletSpeed = 40f;
-        this._bulletSpread = 5f;
+        this._bulletSpread = 2.5f;
         this._capacity = 8;
         this._ammo = this._capacity;
         this._ready = true;
@@ -26,8 +27,8 @@ public class Crossbow : Firearm
         if (this._ammo > 0 && _ready)
         {
             bulletSpawner.spawn(transform.position);
-            StartCoroutine(Cooldown());
             this._ammo--;
+            StartCoroutine(Cooldown(_delay));
         }
     }
 }

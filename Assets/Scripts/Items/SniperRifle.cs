@@ -10,11 +10,12 @@ public class SniperRifle : Firearm
     private void Awake()
     {
         // two(?) shot
-        this._damage = 200f;
+        this._damage = 150f;
         this._delay = 1.5f;
+        this._reloadTime = 1f;
         this._range = 200f;
         this._bulletSpeed = 100f;
-        this._bulletSpread = 1f;
+        this._bulletSpread = 0.5f;
         this._capacity = 4;
         this._ammo = this._capacity;
         this._ready = true;
@@ -26,8 +27,8 @@ public class SniperRifle : Firearm
         if (this._ammo > 0 && _ready)
         {
             bulletSpawner.spawn(transform.position);
-            StartCoroutine(Cooldown());
             this._ammo--;
+            StartCoroutine(Cooldown(_delay));
         }
     }
 }

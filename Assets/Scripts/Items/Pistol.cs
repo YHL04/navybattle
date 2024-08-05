@@ -10,8 +10,9 @@ public class Pistol : Firearm
     private void Awake()
     {
         // TEMP HIGH DAMAGE: DEATH IN 5 SHOTS
-        this._damage = 60f;
+        this._damage = 30f;
         this._delay = 0.2f;
+        this._reloadTime = 3f;
         this._range = 100f;
         this._bulletSpeed = 50f;
         this._bulletSpread = 5f;
@@ -26,8 +27,8 @@ public class Pistol : Firearm
         if (this._ammo > 0 && _ready)
         {
             bulletSpawner.spawn(transform.position);
-            StartCoroutine(Cooldown());
             this._ammo--;
+            StartCoroutine(Cooldown(_delay));
         }
     }
 }

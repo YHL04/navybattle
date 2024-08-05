@@ -10,17 +10,41 @@ public abstract class Item : MonoBehaviour, IItem
 
     public abstract ItemType Type { get; }
 
-
     public void Destroy()
     {
         Destroy(gameObject);
     }
 }
-public abstract class IHoldabletem : Item, IHoldableItem
+public abstract class InventoryItem : Item, IInventoryItem
 {
     public abstract void Use();
+
+    private IEnumerator OnDropActivate()
+    {
+        yield return new WaitForSeconds(2f);
+        this.gameObject.GetComponent<Collider2D>().enabled = true;
+    }
+    public void OnDrop()
+    {
+        // Cooldown on grabbing again, needs to be a separate function call
+        StartCoroutine(OnDropActivate());
+    }
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        Character c = collision.gameObject.GetComponent<Character>();
+        // Must be picked up by a character
+        if (c)
+        {
+            // Must be a player
+            if (c.gameObject.layer == Layers.PLAYER)
+            {
+                this.gameObject.GetComponent<Collider2D>().enabled = false;
+                c.PickUpItem(this);
+            }
+        }
+    }
 }
-public abstract class Weapon : IHoldabletem, IWeapon
+public abstract class Weapon : InventoryItem, IWeapon
 {
     protected float _damage;
     protected float _delay;
@@ -51,6 +75,7 @@ public abstract class Firearm : Weapon, IFirearm
     protected int _capacity;
     protected int _ammo;
     protected bool _ready;
+    protected float _reloadTime;
     protected BulletSpawner bulletSpawner;
     public int Ammo
     {
@@ -69,10 +94,15 @@ public abstract class Firearm : Weapon, IFirearm
     {
         get { return _bulletSpread; }
     }
-    protected IEnumerator Cooldown()
+    public float ReloadTime
+    {
+        get { return _reloadTime; }
+    }
+    // REDEFINE
+    protected IEnumerator Cooldown(float time)
     {
         _ready = false;
-        yield return new WaitForSeconds(_delay);
+        yield return new WaitForSeconds(time);
         _ready = true;
     }
     public override ItemType Type {
@@ -81,10 +111,16 @@ public abstract class Firearm : Weapon, IFirearm
     // All guns reload the same way
     public int Reload(int ammo)
     {
-        if(this.Ammo + ammo <= this.Capacity)
+        // If we aren't ready return same amount
+        if(!_ready)
+        {
+            return ammo;
+        }
+        StartCoroutine(Cooldown(_reloadTime));
+        if (this.Ammo + ammo <= this.Capacity)
         {
             this._ammo += ammo;
-            // No ammo remaining
+            // No ammo remaining 
             return 0;
         } else
         {

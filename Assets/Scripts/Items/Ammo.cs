@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
-public class Ammo : DropItem
+public class Ammo : FloorItem
 {
     private int _count;
 

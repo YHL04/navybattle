@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class DropItem : Item, IDropItem
+public abstract class FloorItem : Item, IFloorItem
 {
     public override ItemType Type
     {
