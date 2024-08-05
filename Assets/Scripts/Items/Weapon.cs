@@ -51,6 +51,7 @@ public abstract class Firearm : Weapon, IFirearm
     protected int _capacity;
     protected int _ammo;
     protected bool _ready;
+    protected float _reloadTime;
     protected BulletSpawner bulletSpawner;
     public int Ammo
     {
@@ -69,10 +70,14 @@ public abstract class Firearm : Weapon, IFirearm
     {
         get { return _bulletSpread; }
     }
-    protected IEnumerator Cooldown()
+    public float ReloadTime
+    {
+        get { return _reloadTime; }
+    }
+    protected IEnumerator Cooldown(float time)
     {
         _ready = false;
-        yield return new WaitForSeconds(_delay);
+        yield return new WaitForSeconds(time);
         _ready = true;
     }
     public override ItemType Type {
@@ -81,10 +86,16 @@ public abstract class Firearm : Weapon, IFirearm
     // All guns reload the same way
     public int Reload(int ammo)
     {
-        if(this.Ammo + ammo <= this.Capacity)
+        // If we aren't ready return same amount
+        if(!_ready)
+        {
+            return ammo;
+        }
+        StartCoroutine(Cooldown(_reloadTime));
+        if (this.Ammo + ammo <= this.Capacity)
         {
             this._ammo += ammo;
-            // No ammo remaining
+            // No ammo remaining 
             return 0;
         } else
         {

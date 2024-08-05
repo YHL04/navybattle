@@ -38,5 +38,6 @@ public interface IFirearm : IWeapon
     float BulletSpread { get; }
     int Ammo { get; }
     int Capacity { get; }
+    float ReloadTime { get; }
     public int Reload(int ammo);
 }
