@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 //  TODO: REFACTOR A BIT
 public class Enemy : ControllableCharacter
 {
-    [SerializeField]
     private EntityManager pm;
     // TODO: FIGURE OUT THESE VARIABLES IN AN OOP WAY
     [SerializeField]
@@ -13,6 +13,10 @@ public class Enemy : ControllableCharacter
     [SerializeField]
     private float cooldown = 1f;
     private float time = 0f;
+    public void Start()
+    {
+        pm = GameManager.instance.PlayerList;
+    }
     public override void Update()
     {
         time += Time.deltaTime;

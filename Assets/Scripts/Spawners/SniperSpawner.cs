@@ -20,6 +20,8 @@ public class SniperSpawner : Spawner
         Character c = characterObject.GetComponent<Character>();
         // Obtain a pistol
         GameObject sniperRifleObject = sniperRifleSpawner.spawn(c.transform.position);
+        // Disable the collider (in inventory)
+        sniperRifleObject.GetComponent<Collider2D>().enabled = false;
         // Set up the player
         c.PickUpItem(sniperRifleObject.GetComponent<IInventoryItem>());
         return characterObject;
