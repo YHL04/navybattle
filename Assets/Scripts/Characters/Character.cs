@@ -58,6 +58,7 @@ public abstract class Character : MonoBehaviour, ICharacter, IInventory
     protected float _defense;
     protected int _hotkey;
     protected int _ammo;
+    protected float _vision;
     protected IInventoryItem[] _inventory;
 
     // Implementations of interface functions and variables
@@ -104,6 +105,11 @@ public abstract class Character : MonoBehaviour, ICharacter, IInventory
     public int Ammo
     {
         get { return _ammo; }
+    }
+    // Vision is how far this character can see by default for targetting entities (e.g. for enemies)
+    public float Vision
+    {
+        get { return _vision; }
     }
 
     // Character needs to have its layer set (player enemy)

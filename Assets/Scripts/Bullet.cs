@@ -41,7 +41,6 @@ public class Bullet : MonoBehaviour
         // If null we hit a wall or a non-character, therefore destroy the bullet
         if(!c)
         {
-            Debug.Log(collision.gameObject.layer);
             Destroy(gameObject);
         } else
         {

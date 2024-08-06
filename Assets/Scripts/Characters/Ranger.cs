@@ -20,6 +20,7 @@ public class Ranger : Character
         this._maxHealth = defaultHealth;
         this._defense = defaultDefense;
         this._ammo = 32;
+        this._vision = 15;
         this._inventory = new IInventoryItem[5];
     }
 }
