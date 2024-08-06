@@ -20,6 +20,7 @@ public class Soldier : Character
         this._maxHealth = defaultHealth;
         this._defense = defaultDefense;
         this._ammo = 64;
+        this._vision = 10;
         this._inventory = new IInventoryItem[5];
     }
 }

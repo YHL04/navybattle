@@ -9,13 +9,28 @@ public class Enemy : ControllableCharacter
     private EntityManager pm;
     // TODO: FIGURE OUT THESE VARIABLES IN AN OOP WAY
     [SerializeField]
-    private float range;
-    [SerializeField]
     private float cooldown = 1f;
     private float time = 0f;
     public void Start()
     {
         pm = GameManager.instance.PlayerList;
+    }
+    private bool lookAhead()
+    {
+        if(!character)
+        {
+            return false;
+        }
+        // We want to be able to hit player and map
+        int layermask = LayerMask.GetMask("Player","Map");
+        // Casts out the ray and stores its output in "hit"
+        RaycastHit2D hit = Physics2D.Raycast(character.transform.position, character.transform.right, this.character.Vision,layermask);
+        if(hit.collider != null)
+        {
+            // Make sure the ray hit a player
+            return hit.collider.gameObject.layer == Layers.PLAYER;
+        }
+        return false;
     }
     public override void Update()
     {
@@ -38,7 +53,7 @@ public class Enemy : ControllableCharacter
             IList<Transform> players = pm.GetLocations();
             foreach (Transform t in players)
             {
-                if (closest == null && Vector3.Distance(t.position,character.transform.position) <= range)
+                if (closest == null && Vector3.Distance(t.position,character.transform.position) <= character.Vision)
                 {
                     closest = t;
                 }
@@ -50,8 +65,8 @@ public class Enemy : ControllableCharacter
                 Vector3 dir = closest.position - character.transform.position;
                 float rotZ = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
                 character.transform.rotation = Quaternion.Euler(0, 0, rotZ);
-                // SHOOT
-                if(time > cooldown)
+                // SHOOT IF THE PATH IS UNOBSTRUCTED
+                if(time > cooldown && lookAhead())
                 {
                     character.UseItem();
                     time = 0;
