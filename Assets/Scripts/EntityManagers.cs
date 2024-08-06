@@ -36,4 +36,17 @@ public class EntityManager : MonoBehaviour
             players.Add(cr);
         }
     }
+    // Get size of the current list that is ALIVE
+    public int getSize()
+    {
+        int count = 0;
+        foreach(ControllableCharacter c in players)
+        {
+            if(c.ActiveCharacter)
+            {
+                count++;
+            }
+        }
+        return count;
+    }
 }

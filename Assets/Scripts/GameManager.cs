@@ -29,4 +29,17 @@ public class GameManager : MonoBehaviour
     public EntityManager EnemyList { get { return enemies; } }
     public EntityManager PlayerList { get {return players; } }
     public Camera Camera { get { return mainCamera; } }
+
+    // GAME LOGIC LOOP
+    public void Update()
+    {
+        if(players.getSize() == 0)
+        {
+            Debug.Log("PLAYERS LOST");
+        }
+        if(enemies.getSize() == 0)
+        {
+            Debug.Log("EMEMIES LOST");
+        }
+    }
 }
