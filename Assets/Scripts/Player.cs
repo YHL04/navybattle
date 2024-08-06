@@ -10,6 +10,8 @@ public class Player : ControllableCharacter
     private Camera cam;
     private PlayerInputActions playerControls;
 
+    public Camera Camera { get { return cam; } set { cam = value; } }
+
     public override void Awake()
     {
         base.Awake();

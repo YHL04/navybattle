@@ -21,12 +21,13 @@ public abstract class LocationSpawner : EntitySpawner
         if(layer == Layers.PLAYER)
         {
             cc = Instantiate(playerPrefab, this.transform.position, Quaternion.identity);
+            Player p = cc.GetComponent<Player>();
+            p.Camera = GameManager.instance.Camera;
         } else if (layer == Layers.ENEMY)
         {
             cc = Instantiate(enemyPrefab, this.transform.position, Quaternion.identity);
         }
-        // Build this character
-        ControllableCharacter entity = cc.GetComponentInParent<ControllableCharacter>();
+        ControllableCharacter entity = cc.GetComponent<ControllableCharacter>();
         entity.setCharacter(c);
         // Add character to the manager
         this.manager.AddPlayer(entity);
