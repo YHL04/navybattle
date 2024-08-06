@@ -20,6 +20,8 @@ public class RangerSpawner : Spawner
         Character c = characterObject.GetComponent<Character>();
         // Obtain a pistol
         GameObject crossbowObject = crossbowSpawner.spawn(c.transform.position);
+        // Disable the collider (in inventory)
+        crossbowObject.GetComponent<Collider2D>().enabled = false;
         // Set up the player
         c.PickUpItem(crossbowObject.GetComponent<IInventoryItem>());
         return characterObject;

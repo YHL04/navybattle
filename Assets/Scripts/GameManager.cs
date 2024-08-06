@@ -12,5 +12,17 @@ public static class Layers
 
 public class GameManager : MonoBehaviour
 {
-    
+    [SerializeField]
+    private EntityManager enemies;
+    [SerializeField]
+    private EntityManager players;
+    public static GameManager instance;
+
+    public void Awake()
+    {
+        instance = this;
+    }
+
+    public EntityManager EnemyList { get { return enemies; } }
+    public EntityManager PlayerList { get {return players; } }
 }

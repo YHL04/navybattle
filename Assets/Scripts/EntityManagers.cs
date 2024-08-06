@@ -7,7 +7,7 @@ using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class EntityManager : MonoBehaviour
 {
-    //TODO: ADD FEATURE TO INSTANTIATE PLAYERS AND ENEMIES AND ADD THEM TO THESE LISTS
+
     [SerializeField]
     private List<ControllableCharacter> players;
     // Gets an immutable list of all current locations
@@ -27,5 +27,13 @@ public class EntityManager : MonoBehaviour
     public void Update()
     {
         players.RemoveAll(x => !x.Active);
+    }
+    public void AddPlayer(ControllableCharacter cr)
+    {
+        if (cr != null)
+        {
+            cr.gameObject.layer = this.gameObject.layer;
+            players.Add(cr);
+        }
     }
 }
