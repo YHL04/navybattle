@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     private EntityManager enemies;
     [SerializeField]
     private EntityManager players;
+    [SerializeField]
+    private Camera mainCamera;
     public static GameManager instance;
 
     public void Awake()
@@ -26,4 +28,5 @@ public class GameManager : MonoBehaviour
 
     public EntityManager EnemyList { get { return enemies; } }
     public EntityManager PlayerList { get {return players; } }
+    public Camera Camera { get { return mainCamera; } }
 }
