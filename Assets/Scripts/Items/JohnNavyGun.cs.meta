@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/Scripts/Items/FloorItem.cs.meta
-guid: 9c5f54788d493d14eaad6796e898e43e
-========
-guid: dde4f0e60688e3841b381411ca456f69
->>>>>>>> main:Assets/Scripts/Characters/JohnNavyBattle.cs.meta
+guid: 96bbe93d1065d094f82769dae6bc4991
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
