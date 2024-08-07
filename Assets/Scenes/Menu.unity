@@ -134,7 +134,6 @@ GameObject:
   - component: {fileID: 109042468}
   - component: {fileID: 109042467}
   - component: {fileID: 109042466}
-  - component: {fileID: 109042469}
   m_Layer: 5
   m_Name: StartGame
   m_TagString: Untagged
@@ -206,9 +205,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 150723643}
-        m_TargetAssemblyTypeName: Menu, Assembly-CSharp
-        m_MethodName: OnPlayButton
+      - m_Target: {fileID: 150723646}
+        m_TargetAssemblyTypeName: Startgame, Assembly-CSharp
+        m_MethodName: StartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -256,18 +255,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 109042464}
   m_CullTransparentMesh: 1
---- !u!114 &109042469
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 109042464}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76dbc7890ff58c74bbf22cb84c5821f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &124923414
 GameObject:
   m_ObjectHideFlags: 0
@@ -416,6 +403,7 @@ GameObject:
   - component: {fileID: 150723643}
   - component: {fileID: 150723645}
   - component: {fileID: 150723644}
+  - component: {fileID: 150723646}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -559,6 +547,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 150723638}
   m_CullTransparentMesh: 1
+--- !u!114 &150723646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 150723638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62851ea904fefae46966cdb41bdf9c8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &283858357
 GameObject:
   m_ObjectHideFlags: 0
@@ -1595,9 +1595,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 150723643}
-        m_TargetAssemblyTypeName: Menu, Assembly-CSharp
-        m_MethodName: OnSettings
+      - m_Target: {fileID: 150723646}
+        m_TargetAssemblyTypeName: Startgame, Assembly-CSharp
+        m_MethodName: Settings
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
