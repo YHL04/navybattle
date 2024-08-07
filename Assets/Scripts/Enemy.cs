@@ -12,9 +12,16 @@ public class Enemy : ControllableCharacter
     [SerializeField]
     private float cooldown = 1f;
     private float shootTimer = 0f;
-    public void Start()
+    private ProgressBar healthBar;
+    public override void Awake()
     {
+        base.Awake();
         pm = GameManager.instance.PlayerList;
+        // Add a health bar for the enemy
+        GameObject prefab = Resources.Load<GameObject>("Prefabs/ProgressBar");
+        GameObject b1 = Instantiate(prefab, new Vector3(0, 0, 0), Quaternion.identity);
+        healthBar = b1.GetComponent<ProgressBar>();
+        indicators.Add(healthBar);
     }
     private bool lookAhead()
     {
@@ -40,14 +47,15 @@ public class Enemy : ControllableCharacter
             // Check if character is dead
             if (!character.isAlive())
             {
-                character.Terminate();
-                character = null;
-                // If the character is dead, the Enemy goes into a "Zombie" state until the EnemyManager deletes us.
-                this.active = false;
+                this.Terminate();
                 return;
             }
             // TODO: AI Pathfinding control, walk towards player
+            // Put the item ner the character
             character.HoldItem();
+            // Put the health bar near the player & update it
+            healthBar.transform.position = character.transform.position + Vector3.down*1.3f;
+            healthBar.UpdateAmount(character.Health, character.MaxHealth);
             // Find closest player
             Transform closest = null;
             IList<Transform> players = pm.GetLocations();
