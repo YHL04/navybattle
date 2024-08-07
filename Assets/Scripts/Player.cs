@@ -9,13 +9,25 @@ public class Player : ControllableCharacter
     [SerializeField]
     private Camera cam;
     private PlayerInputActions playerControls;
-
+    private ProgressBar healthBar;
+    private ProgressBar ammoBar;
     public Camera Camera { get { return cam; } set { cam = value; } }
 
     public override void Awake()
     {
         base.Awake();
         playerControls = new PlayerInputActions();
+        GameObject prefab = Resources.Load<GameObject>("Prefabs/ProgressBar");
+        // Health Bar
+        GameObject b1 = Instantiate(prefab, new Vector3(0, 0, 0), Quaternion.identity);
+        healthBar = b1.GetComponent<ProgressBar>();
+        indicators.Add(healthBar);
+        // Ammo Bar
+        //b1 = Instantiate(prefab, new Vector3(0, 0, 0), Quaternion.identity);
+        //ammoBar = b1.GetComponent<ProgressBar>();
+        //ammoBar.SetColor(Color.yellow);
+        //indicators.Add(ammoBar);
+
     }
 
     private void OnEnable()
@@ -109,12 +121,19 @@ public class Player : ControllableCharacter
             if (!character.isAlive())
             {
                 character.Terminate();
+                healthBar.Destroy();
                 character = null;
                 // DO NOT set player to inactive on death of a character!
                 return;
             }
             // CARRY CURRENT ITEM
             character.HoldItem();
+            // HEALTH
+            healthBar.transform.position = character.transform.position + Vector3.down * 1.3f;
+            healthBar.UpdateAmount(character.Health, character.MaxHealth);
+            // AMMO
+            //healthBar.transform.position = character.transform.position - Vector3.down * 2.3f;
+            //healthBar.UpdateAmount(character.Ammo, character.);
         }
     }
     // Disconnect the current player (flag for destruction)

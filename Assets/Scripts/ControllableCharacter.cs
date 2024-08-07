@@ -7,6 +7,7 @@ public abstract class ControllableCharacter : MonoBehaviour
     protected Character character;
     protected int hotkey;
     protected bool active;
+    protected List<ProgressBar> indicators = new List<ProgressBar>();
     // Check if the current player is active (flag for removal)
     public bool Active { get { return active;  } }
     public bool ActiveCharacter { get { return character != null; } }
@@ -32,6 +33,9 @@ public abstract class ControllableCharacter : MonoBehaviour
         if(this.character != null)
         {
             this.character.Terminate();
+        }
+        foreach(ProgressBar p in indicators) {
+            p.Destroy();
         }
         Destroy(this.gameObject);
     }
