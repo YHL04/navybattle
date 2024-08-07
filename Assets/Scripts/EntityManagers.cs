@@ -47,7 +47,6 @@ public class EntityManager : MonoBehaviour
                 count++;
             }
         }
-        Debug.Log(count);
         return count;
     }
 }
