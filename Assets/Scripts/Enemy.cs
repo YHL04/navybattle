@@ -10,19 +10,10 @@ public class Enemy : ControllableCharacter
     // TODO: FIGURE OUT THESE VARIABLES IN AN OOP WAY
     [SerializeField]
     private float cooldown = 1f;
-    private bool shooting = false;
+    private float shootTimer = 0f;
     public void Start()
     {
         pm = GameManager.instance.PlayerList;
-    }
-
-    private IEnumerator Cooldown(float time)
-    {
-        shooting = true;
-        yield return new WaitForSeconds(time);
-        // Shoot
-        character.UseItem();
-        shooting = false;
     }
     private bool lookAhead()
     {
@@ -74,9 +65,18 @@ public class Enemy : ControllableCharacter
                 float rotZ = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
                 character.transform.rotation = Quaternion.Euler(0, 0, rotZ);
                 // SHOOT IF THE PATH IS UNOBSTRUCTED
-                if(!shooting)
+                if(lookAhead())
                 {
-                    StartCoroutine(Cooldown(cooldown));
+                    // We count up: player must be in view for 1s
+                    shootTimer += Time.deltaTime;
+                } else
+                {
+                    shootTimer = 0f;
+                }
+                if(shootTimer > cooldown)
+                {
+                    character.UseItem();
+                    shootTimer = 0f;
                 }
             }
         }
