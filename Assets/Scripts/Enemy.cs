@@ -10,10 +10,19 @@ public class Enemy : ControllableCharacter
     // TODO: FIGURE OUT THESE VARIABLES IN AN OOP WAY
     [SerializeField]
     private float cooldown = 1f;
-    private float time = 0f;
+    private bool shooting = false;
     public void Start()
     {
         pm = GameManager.instance.PlayerList;
+    }
+
+    private IEnumerator Cooldown(float time)
+    {
+        shooting = true;
+        yield return new WaitForSeconds(time);
+        // Shoot
+        character.UseItem();
+        shooting = false;
     }
     private bool lookAhead()
     {
@@ -22,7 +31,7 @@ public class Enemy : ControllableCharacter
             return false;
         }
         // We want to be able to hit player and map
-        int layermask = LayerMask.GetMask("Player","Map");
+        int layermask = LayerMask.GetMask("Player","Wall");
         // Casts out the ray and stores its output in "hit"
         RaycastHit2D hit = Physics2D.Raycast(character.transform.position, character.transform.right, this.character.Vision,layermask);
         if(hit.collider != null)
@@ -34,7 +43,6 @@ public class Enemy : ControllableCharacter
     }
     public override void Update()
     {
-        time += Time.deltaTime;
         if (character)
         {
             // Check if character is dead
@@ -66,10 +74,9 @@ public class Enemy : ControllableCharacter
                 float rotZ = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
                 character.transform.rotation = Quaternion.Euler(0, 0, rotZ);
                 // SHOOT IF THE PATH IS UNOBSTRUCTED
-                if(time > cooldown && lookAhead())
+                if(!shooting)
                 {
-                    character.UseItem();
-                    time = 0;
+                    StartCoroutine(Cooldown(cooldown));
                 }
             }
         }
