@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public abstract class Item : MonoBehaviour, IItem
 {
