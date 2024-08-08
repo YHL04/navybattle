@@ -22,10 +22,17 @@ public class GameManager : MonoBehaviour
     private Camera mainCamera;
     public static GameManager instance;
     Scene currentScene;
+    public GameObject Canvas;
+    bool Paused = false;
+
 
     public void Awake()
     {
         instance = this;
+    }
+    void Start()
+    {
+        Canvas.gameObject.SetActive(false);
     }
 
     public EntityManager EnemyList { get { return enemies; } }
@@ -36,7 +43,25 @@ public class GameManager : MonoBehaviour
     public void Update()
     {   
         currentScene = SceneManager.GetActiveScene();
-        if(players.getSize() == 0)
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (Paused == true)
+            {
+                Time.timeScale = 1.0f;
+                Canvas.gameObject.SetActive(false);
+
+                Paused = false;
+            }
+            else
+            {
+                Time.timeScale = 0.0f;
+                Canvas.gameObject.SetActive(true);
+                Paused = true;
+            }
+        }
+
+
+        if (players.getSize() == 0)
         {
             SceneManager.LoadScene(5);
             Debug.Log("PLAYERS LOST");
