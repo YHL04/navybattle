@@ -14,7 +14,7 @@ public class SniperRifle : Firearm
         this._delay = 1.5f;
         this._reloadTime = 1f;
         this._range = 200f;
-        this._bulletSpeed = 100f;
+        this._bulletSpeed = 80f;
         this._bulletSpread = 0.5f;
         this._capacity = 4;
         this._ammo = this._capacity;

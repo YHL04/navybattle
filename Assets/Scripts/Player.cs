@@ -11,6 +11,8 @@ public class Player : ControllableCharacter
     private PlayerInputActions playerControls;
     private ProgressBar healthBar;
     private ProgressBar ammoBar;
+
+    private Vector2 motionVector;
     public Camera Camera { get { return cam; } set { cam = value; } }
 
     public override void Awake()
@@ -57,11 +59,11 @@ public class Player : ControllableCharacter
             Vector2 dir = context.ReadValue<Vector2>();
             if (context.canceled)
             {
-                character.Move(0, 0);
+                motionVector = Vector2.zero;
             }
             else
             {
-                character.Move(dir.x, dir.y);
+                motionVector = dir;
             }
         }
         
@@ -126,6 +128,8 @@ public class Player : ControllableCharacter
                 // DO NOT set player to inactive on death of a character!
                 return;
             }
+            // MOVE
+            character.Move(motionVector.x,motionVector.y);
             // CARRY CURRENT ITEM
             character.HoldItem();
             // HEALTH

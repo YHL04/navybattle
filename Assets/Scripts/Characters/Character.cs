@@ -130,7 +130,6 @@ public abstract class Character : MonoBehaviour, ICharacter, IInventory
         if (_inventory[_hotkey] != null)
         {
             // TEMPORARY DIMENSIONAL SHIFTS
-            _inventory[_hotkey].enabled = true;
             _inventory[_hotkey].transform.position = this.transform.position + this.transform.rotation*Vector2.right;
             _inventory[_hotkey].transform.rotation = this.transform.rotation;
         }
@@ -168,8 +167,14 @@ public abstract class Character : MonoBehaviour, ICharacter, IInventory
         {
             if (_inventory[i] == null)
             {
-                // IF ITS AMMO ADD IT TO OUR 
                 _inventory[i] = item;
+                _inventory[i].gameObject.layer = this.gameObject.layer;
+                // DISABLE ITEM (s.t. it doesn't show if its not our hotbar)
+                if(i != _hotkey)
+                {
+                    _inventory[i].gameObject.SetActive(false);
+                    _inventory[i].enabled = false;
+                }
                 return;
             }
         }

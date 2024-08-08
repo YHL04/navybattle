@@ -47,6 +47,12 @@ public class Enemy : ControllableCharacter
             // Check if character is dead
             if (!character.isAlive())
             {
+                // SPAWN CHARACTER DROPS
+                AmmoSpawner ammoSpawner = ScriptableObject.CreateInstance<AmmoSpawner>();
+                ammoSpawner.Initialize(character.Ammo);
+                ammoSpawner.spawn(character.transform.position);
+                character.DropItem();
+
                 this.Terminate();
                 return;
             }
