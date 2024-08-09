@@ -1,8 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class Player : ControllableCharacter
 {
@@ -15,6 +18,8 @@ public class Player : ControllableCharacter
     private Vector2 motionVector;
     public Camera Camera { get { return cam; } set { cam = value; } }
 
+    Text ammoTracker;
+
     public override void Awake()
     {
         base.Awake();
@@ -24,11 +29,17 @@ public class Player : ControllableCharacter
         GameObject b1 = Instantiate(prefab, new Vector3(0, 0, 0), Quaternion.identity);
         healthBar = b1.GetComponent<ProgressBar>();
         indicators.Add(healthBar);
+
+
         // Ammo Bar
-        //b1 = Instantiate(prefab, new Vector3(0, 0, 0), Quaternion.identity);
-        //ammoBar = b1.GetComponent<ProgressBar>();
-        //ammoBar.SetColor(Color.yellow);
-        //indicators.Add(ammoBar);
+        /*
+        ammoTracker = GameObject.Find("AmmoCanvas").GetComponent<Text>();
+
+        b1 = Instantiate(prefab, new Vector3(0, 0, 0), Quaternion.identity);
+        ammoBar = b1.GetComponent<ProgressBar>();
+        ammoBar.SetColor(Color.yellow);
+        indicators.Add(ammoBar);
+        */
 
     }
 
@@ -54,7 +65,7 @@ public class Player : ControllableCharacter
     // INPUT SYSTEM CALLS
     private void Move(InputAction.CallbackContext context)
     {
-        if(character)
+        if (character)
         {
             Vector2 dir = context.ReadValue<Vector2>();
             if (context.canceled)
@@ -66,11 +77,11 @@ public class Player : ControllableCharacter
                 motionVector = dir;
             }
         }
-        
+
     }
     private void Look(InputAction.CallbackContext context)
     {
-        if(character)
+        if (character)
         {
             Vector3 mousePos = cam.ScreenToWorldPoint(context.ReadValue<Vector2>());
             Vector3 rotation = mousePos - character.transform.position;
@@ -80,14 +91,14 @@ public class Player : ControllableCharacter
     }
     private void UseItem(InputAction.CallbackContext context)
     {
-        if(character)
+        if (character)
         {
             character.UseItem();
         }
     }
     private void Inventory(InputAction.CallbackContext context)
     {
-        if(character)
+        if (character)
         {
             // Parse key number
             int key = 0;
@@ -124,20 +135,18 @@ public class Player : ControllableCharacter
             {
                 character.Terminate();
                 healthBar.Destroy();
+                ammoBar.Destroy();
                 character = null;
                 // DO NOT set player to inactive on death of a character!
                 return;
             }
             // MOVE
-            character.Move(motionVector.x,motionVector.y);
+            character.Move(motionVector.x, motionVector.y);
             // CARRY CURRENT ITEM
             character.HoldItem();
             // HEALTH
             healthBar.transform.position = character.transform.position + Vector3.down * 1.3f;
             healthBar.UpdateAmount(character.Health, character.MaxHealth);
-            // AMMO
-            //healthBar.transform.position = character.transform.position - Vector3.down * 2.3f;
-            //healthBar.UpdateAmount(character.Ammo, character.);
         }
     }
     // Disconnect the current player (flag for destruction)

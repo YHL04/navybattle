@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class Item : MonoBehaviour, IItem
 {
@@ -56,7 +57,8 @@ public abstract class Weapon : InventoryItem, IWeapon
     {
         get { return _delay; }
     }
-    public float Range {
+    public float Range
+    {
         get { return _range; }
     }
     public int Layer
@@ -81,7 +83,7 @@ public abstract class Firearm : Weapon, IFirearm
     }
     public int Capacity
     {
-        get { return _capacity; } 
+        get { return _capacity; }
     }
 
     public float BulletSpeed
@@ -103,14 +105,15 @@ public abstract class Firearm : Weapon, IFirearm
         yield return new WaitForSeconds(time);
         _ready = true;
     }
-    public override ItemType Type {
+    public override ItemType Type
+    {
         get { return ItemType.FIREARM; }
     }
     // All guns reload the same way
     public int Reload(int ammo)
     {
         // If we aren't ready return same amount
-        if(!_ready)
+        if (!_ready)
         {
             return ammo;
         }
@@ -120,7 +123,8 @@ public abstract class Firearm : Weapon, IFirearm
             this._ammo += ammo;
             // No ammo remaining 
             return 0;
-        } else
+        }
+        else
         {
             int remaining = ammo + this.Ammo - this.Capacity;
             this._ammo = this.Capacity;

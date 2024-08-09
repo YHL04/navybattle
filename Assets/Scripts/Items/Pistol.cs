@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Pistol : Firearm
 {
+
     [SerializeField]
     private GameObject bulletPrefab;
     private void Awake()
@@ -21,6 +23,11 @@ public class Pistol : Firearm
         this._ready = true;
         this.bulletSpawner = ScriptableObject.CreateInstance<BulletSpawner>();
         this.bulletSpawner.Initialize(this);
+    }
+
+    public float getAmmo()
+    {
+        return this._ammo;
     }
     public override void Use()
     {

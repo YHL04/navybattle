@@ -2,11 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class EntityManager : MonoBehaviour
 {
-
     [SerializeField]
     private List<ControllableCharacter> players;
     // Gets an immutable list of all current locations
@@ -15,7 +15,7 @@ public class EntityManager : MonoBehaviour
         List<Transform> t = new List<Transform>();
         foreach (ControllableCharacter p in players)
         {
-            if(p.ActiveCharacter)
+            if (p.ActiveCharacter)
             {
                 t.Add(p.GetLocation());
             }
@@ -33,15 +33,16 @@ public class EntityManager : MonoBehaviour
         {
             cr.gameObject.layer = this.gameObject.layer;
             players.Add(cr);
+
         }
     }
     // Get size of the current list that is ALIVE
     public int getSize()
     {
         int count = 0;
-        foreach(ControllableCharacter c in players)
+        foreach (ControllableCharacter c in players)
         {
-            if(c.ActiveCharacter)
+            if (c.ActiveCharacter)
             {
                 count++;
             }

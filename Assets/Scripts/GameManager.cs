@@ -36,12 +36,12 @@ public class GameManager : MonoBehaviour
     }
 
     public EntityManager EnemyList { get { return enemies; } }
-    public EntityManager PlayerList { get {return players; } }
+    public EntityManager PlayerList { get { return players; } }
     public Camera Camera { get { return mainCamera; } }
 
     // GAME LOGIC LOOP
     public void Update()
-    {   
+    {
         currentScene = SceneManager.GetActiveScene();
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -66,21 +66,21 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene(5);
             Debug.Log("PLAYERS LOST");
         }
-        if(enemies.getSize() == 0)
+        if (enemies.getSize() == 0)
         {
-            if(currentScene.name == "Level3")
+            if (currentScene.name == "Level3")
             {
                 SceneManager.LoadScene(4);
             }
-            else if(currentScene.name == "Level1")
+            else if (currentScene.name == "Level1")
             {
                 SceneManager.LoadScene(2);
             }
-            else if(currentScene.name == "Level2")
+            else if (currentScene.name == "Level2")
             {
                 SceneManager.LoadScene(3);
             }
-            
+
             Debug.Log("EMEMIES LOST");
         }
     }
