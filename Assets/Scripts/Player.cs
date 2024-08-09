@@ -43,7 +43,7 @@ public class Player : ControllableCharacter
 
     }
 
-    private void OnEnable()
+    public void OnEnable()
     {
         playerControls.Enable();
         // ENABLING CALLS
@@ -57,13 +57,13 @@ public class Player : ControllableCharacter
         playerControls.Player.Drop.performed += Drop;
     }
 
-    private void OnDisable()
+    public void OnDisable()
     {
         playerControls.Disable();
     }
 
     // INPUT SYSTEM CALLS
-    private void Move(InputAction.CallbackContext context)
+    public void Move(InputAction.CallbackContext context)
     {
         if (character)
         {
@@ -89,14 +89,14 @@ public class Player : ControllableCharacter
             character.transform.rotation = Quaternion.Euler(0, 0, rotZ);
         }
     }
-    private void UseItem(InputAction.CallbackContext context)
+    public void UseItem(InputAction.CallbackContext context)
     {
         if (character)
         {
             character.UseItem();
         }
     }
-    private void Inventory(InputAction.CallbackContext context)
+    public void Inventory(InputAction.CallbackContext context)
     {
         if (character)
         {
@@ -110,7 +110,7 @@ public class Player : ControllableCharacter
         }
     }
 
-    private void Reload(InputAction.CallbackContext context)
+    public void Reload(InputAction.CallbackContext context)
     {
         if (character)
         {
@@ -118,7 +118,7 @@ public class Player : ControllableCharacter
         }
     }
 
-    private void Drop(InputAction.CallbackContext context)
+    public void Drop(InputAction.CallbackContext context)
     {
         if (character)
         {

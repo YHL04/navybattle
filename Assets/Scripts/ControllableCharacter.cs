@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class ControllableCharacter : MonoBehaviour
 {
-    protected Character character;
+    public Character character;
     protected int hotkey;
     protected bool active;
     protected List<ProgressBar> indicators = new List<ProgressBar>();
