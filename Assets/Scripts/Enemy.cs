@@ -23,7 +23,7 @@ public class Enemy : ControllableCharacter
         healthBar = b1.GetComponent<ProgressBar>();
         indicators.Add(healthBar);
     }
-    private bool lookAhead()
+    public bool lookAhead()
     {
         if(!character)
         {
@@ -95,5 +95,9 @@ public class Enemy : ControllableCharacter
                 }
             }
         }
+    }
+    public float shootTimer1
+    {
+        get { return shootTimer; }
     }
 }
