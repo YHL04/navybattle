@@ -9,8 +9,10 @@ public abstract class Firearm : Weapon, IFirearm
     protected int _capacity;
     protected int _ammo;
     protected bool _ready;
+    protected bool _isReloading;
     protected float _reloadTime;
     protected BulletSpawner bulletSpawner;
+
     public int Ammo
     {
         get { return _ammo; }
@@ -32,6 +34,12 @@ public abstract class Firearm : Weapon, IFirearm
     {
         get { return _reloadTime; }
     }
+
+    public bool IsReloading
+    {
+        get { return _isReloading; }
+    }
+
     // REDEFINE
     protected IEnumerator Cooldown(float time)
     {
@@ -39,30 +47,42 @@ public abstract class Firearm : Weapon, IFirearm
         yield return new WaitForSeconds(time);
         _ready = true;
     }
+
     public override ItemType Type
     {
         get { return ItemType.FIREARM; }
     }
+
     // All guns reload the same way
     public int Reload(int ammo)
     {
-        // If we aren't ready return same amount
-        if (!_ready)
+        if (!_ready || _isReloading)
         {
             return ammo;
         }
-        StartCoroutine(Cooldown(_reloadTime));
-        if (this.Ammo + ammo <= this.Capacity)
+
+        StartCoroutine(ReloadCoroutine());
+        return 0;
+    }
+
+    private IEnumerator ReloadCoroutine()
+    {
+        _isReloading = true;
+        _ammo = 0;
+        yield return new WaitForSeconds(_reloadTime);
+        _ammo = _capacity;
+        _isReloading = false;
+        StartCoroutine(Cooldown(0.2f)); // Assuming a delay between reload and being ready to shoot
+    }
+
+    public override void Use()
+    {
+        if (_ready && _ammo > 0)
         {
-            this._ammo += ammo;
-            // No ammo remaining 
-            return 0;
-        }
-        else
-        {
-            int remaining = ammo + this.Ammo - this.Capacity;
-            this._ammo = this.Capacity;
-            return remaining;
+            _ammo--;
+            // Fire the weapon logic here
+            _ready = false;
+            StartCoroutine(Cooldown(0.2f)); // Assuming a delay between shots
         }
     }
 }

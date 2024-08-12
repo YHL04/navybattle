@@ -46,9 +46,9 @@ public abstract class Character : MonoBehaviour, ICharacter, IInventory
         get { return _hotkey; }
         set
         {
-            if(value >= 0 && value < _inventory.Length)
+            if (value >= 0 && value < _inventory.Length)
             {
-                if(_inventory[_hotkey] != null)
+                if (_inventory[_hotkey] != null)
                 {
                     _inventory[_hotkey].gameObject.SetActive(false);
                 }
@@ -74,7 +74,7 @@ public abstract class Character : MonoBehaviour, ICharacter, IInventory
     public void SetLayer(int layer)
     {
         this.gameObject.layer = layer;
-        for(int i = 0; i < _inventory.Length; i++)
+        for (int i = 0; i < _inventory.Length; i++)
         {
             if (_inventory[i] != null)
             {
@@ -88,7 +88,7 @@ public abstract class Character : MonoBehaviour, ICharacter, IInventory
         if (_inventory[_hotkey] != null)
         {
             // TEMPORARY DIMENSIONAL SHIFTS
-            _inventory[_hotkey].transform.position = this.transform.position + this.transform.rotation*Vector2.right;
+            _inventory[_hotkey].transform.position = this.transform.position + this.transform.rotation * Vector2.right;
             _inventory[_hotkey].transform.rotation = this.transform.rotation;
         }
     }
@@ -112,23 +112,23 @@ public abstract class Character : MonoBehaviour, ICharacter, IInventory
         if (_inventory[_hotkey] != null)
         {
             ItemType type = _inventory[_hotkey].Type;
-            if(type == ItemType.FIREARM)
+            if (type == ItemType.FIREARM)
             {
-                IFirearm firearm = (IFirearm) _inventory[_hotkey];
+                IFirearm firearm = (IFirearm)_inventory[_hotkey];
                 this._ammo = firearm.Reload(_ammo);
             }
         }
     }
     public void PickUpItem(IInventoryItem item)
     {
-        for(int i = 0; i < _inventory.Length; i++)
+        for (int i = 0; i < _inventory.Length; i++)
         {
             if (_inventory[i] == null)
             {
                 _inventory[i] = item;
                 _inventory[i].gameObject.layer = this.gameObject.layer;
                 // DISABLE ITEM (s.t. it doesn't show if its not our hotbar)
-                if(i != _hotkey)
+                if (i != _hotkey)
                 {
                     _inventory[i].gameObject.SetActive(false);
                     _inventory[i].enabled = false;
@@ -176,7 +176,7 @@ public abstract class Character : MonoBehaviour, ICharacter, IInventory
     // Terminate the current character GameObject
     public void Terminate()
     {
-        for(int i = 0; i < _inventory.Length; i++)
+        for (int i = 0; i < _inventory.Length; i++)
         {
             if (_inventory[i] != null)
             {
@@ -184,5 +184,11 @@ public abstract class Character : MonoBehaviour, ICharacter, IInventory
             }
         }
         Destroy(gameObject);
+    }
+
+    // Get the current weapon
+    public Weapon GetCurrentWeapon()
+    {
+        return _inventory[_hotkey] as Weapon;
     }
 }

@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -19,6 +18,7 @@ public class Player : ControllableCharacter
     public Camera Camera { get { return cam; } set { cam = value; } }
 
     Text ammoTracker;
+    private TrackAmmo trackAmmo;
 
     public override void Awake()
     {
@@ -30,7 +30,6 @@ public class Player : ControllableCharacter
         healthBar = b1.GetComponent<ProgressBar>();
         indicators.Add(healthBar);
 
-
         // Ammo Bar
         /*
         ammoTracker = GameObject.Find("AmmoCanvas").GetComponent<Text>();
@@ -40,7 +39,21 @@ public class Player : ControllableCharacter
         ammoBar.SetColor(Color.yellow);
         indicators.Add(ammoBar);
         */
+    }
 
+    void Start()
+    {
+        // Find the TrackAmmo component in the scene
+        trackAmmo = FindObjectOfType<TrackAmmo>();
+
+        if (trackAmmo == null)
+        {
+            Debug.LogError("TrackAmmo component not found in the scene.");
+        }
+        else
+        {
+            UpdateAmmoUI();
+        }
     }
 
     public void OnEnable()
@@ -77,8 +90,8 @@ public class Player : ControllableCharacter
                 motionVector = dir;
             }
         }
-
     }
+
     private void Look(InputAction.CallbackContext context)
     {
         if (character)
@@ -89,13 +102,16 @@ public class Player : ControllableCharacter
             character.transform.rotation = Quaternion.Euler(0, 0, rotZ);
         }
     }
+
     public void UseItem(InputAction.CallbackContext context)
     {
         if (character)
         {
             character.UseItem();
+            UpdateAmmoUI();
         }
     }
+
     public void Inventory(InputAction.CallbackContext context)
     {
         if (character)
@@ -106,6 +122,7 @@ public class Player : ControllableCharacter
             if (key < character.InventorySize)
             {
                 character.Hotkey = key - 1;
+                UpdateAmmoUI();
             }
         }
     }
@@ -115,6 +132,7 @@ public class Player : ControllableCharacter
         if (character)
         {
             character.Reload();
+            trackAmmo?.StartReload(); // Start reloading process and update UI to 0/
         }
     }
 
@@ -123,8 +141,19 @@ public class Player : ControllableCharacter
         if (character)
         {
             character.DropItem();
+            UpdateAmmoUI();
         }
     }
+
+    private void UpdateAmmoUI()
+    {
+        if (trackAmmo != null && character != null)
+        {
+            var weapon = character.GetCurrentWeapon() as Firearm;
+            trackAmmo.SetCurrentWeapon(weapon);
+        }
+    }
+
     // Update is called once per frame
     public override void Update()
     {
@@ -135,7 +164,7 @@ public class Player : ControllableCharacter
             {
                 character.Terminate();
                 healthBar.Destroy();
-                ammoBar.Destroy();
+                if (ammoBar != null) ammoBar.Destroy();
                 character = null;
                 // DO NOT set player to inactive on death of a character!
                 return;
@@ -149,6 +178,7 @@ public class Player : ControllableCharacter
             healthBar.UpdateAmount(character.Health, character.MaxHealth);
         }
     }
+
     // Disconnect the current player (flag for destruction)
     public void Disconnect()
     {
