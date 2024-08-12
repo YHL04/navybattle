@@ -10,7 +10,7 @@ public class EntityManager : MonoBehaviour
     [SerializeField]
     private List<ControllableCharacter> players;
     // Gets an immutable list of all current locations
-    public IList<Transform> GetLocations()
+    public IList<Transform> getLocations()
     {
         List<Transform> t = new List<Transform>();
         foreach (ControllableCharacter p in players)
@@ -27,7 +27,7 @@ public class EntityManager : MonoBehaviour
     {
         players.RemoveAll(x => !x.Active);
     }
-    public void AddPlayer(ControllableCharacter cr)
+    public void addPlayer(ControllableCharacter cr)
     {
         if (cr != null)
         {

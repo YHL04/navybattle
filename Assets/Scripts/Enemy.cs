@@ -64,7 +64,7 @@ public class Enemy : ControllableCharacter
             healthBar.UpdateAmount(character.Health, character.MaxHealth);
             // Find closest player
             Transform closest = null;
-            IList<Transform> players = pm.GetLocations();
+            IList<Transform> players = pm.getLocations();
             foreach (Transform t in players)
             {
                 if (closest == null && Vector3.Distance(t.position,character.transform.position) <= character.Vision)
