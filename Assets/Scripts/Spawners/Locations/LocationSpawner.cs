@@ -29,6 +29,6 @@ public abstract class LocationSpawner : EntitySpawner
         ControllableCharacter entity = cc.GetComponent<ControllableCharacter>();
         entity.setCharacter(c);
         // Add character to the manager
-        this.manager.AddPlayer(entity);
+        this.manager.addPlayer(entity);
     }
 }

@@ -20,7 +20,7 @@ public class TrackAmmo : MonoBehaviour
             {
                 ammo--;
             }
-            ammoText.text = ammo.ToString() + "/" + privateAmmo;
+            //ammoText.text = ammo.ToString() + "/" + privateAmmo;
         }
     }
 }
